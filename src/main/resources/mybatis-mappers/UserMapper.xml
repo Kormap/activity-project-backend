@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Mybatis-mapper -->
+
+<mapper namespace="com.activity.mybatis-mappers.UserMapper">
+
+<!-- refid - table -->
+
+	<sql id="userTable">
+		user_email,
+		user_password,
+		user_name,
+		user_birthday,
+		user_tell	
+	</sql>
+
+
+
+<!-- 조회쿼리 -->
+									<!-- com.activity.domain.UserDTO = UserDTO Alias설정 (applilcation.properties) -->
+<select id="getUserList" parameterType="UserDTO" resultType="UserDTO">
+	SELECT
+		<include refid="userTable"/>
+	FROM
+		user
+</select>
+
+
+
+</mapper>
