@@ -12,7 +12,6 @@ public class UserDTO {
 	private String user_email;
 	private String user_password;
 	private String user_name;
-	private String user_birthday;
 	private String user_tell;
 //	private Void getUser_email;
 //	private Void getUser_name;
@@ -24,13 +23,11 @@ public class UserDTO {
 	public UserDTO(String user_email
 					,String user_password
 					,String user_name
-					,String user_birthday
 					,String user_tell)
 	{
 		this.user_email= user_email;
 		this.user_password = user_password;
 		this.user_name = user_name;
-		this.user_birthday = user_birthday;
 		this.user_tell = user_tell;
 	}
 
@@ -38,7 +35,7 @@ public class UserDTO {
 	@Override
 	public String toString() {
 		return "UserDTO [user_email=" + user_email + ", user_password=" + user_password + ", user_name=" + user_name
-				+ ", user_birthday=" + user_birthday + ", user_tell=" + user_tell + "]";
+				+ ", user_tell=" + user_tell + "]";
 	}
 	
 }
