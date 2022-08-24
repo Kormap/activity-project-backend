@@ -1,14 +1,17 @@
 package com.activity.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 //import java.util.ArrayList;
 //import java.util.List;
 //
@@ -19,7 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 //import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activity.domain.UserDTO;
@@ -36,14 +38,49 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	
-	//유저 정보 리스트 조회 
+	//유저 정보 리스트 조회 (테스트용)
 	@GetMapping("/list")
 	public List<UserDTO> getUserList() throws Exception {
 		List<UserDTO> getUserList = userService.getUserList();
 		return getUserList;
 	}
 	
+	//로그인 시 ID,PW 가져오기 
 	
+	@PostMapping("/login")
+	public ArrayList<HashMap<String,Object>> postInput(@RequestBody HashMap<String, Object> requestJsonHashMap)throws Exception {
+		
+		//response Data (여기서는 ArrayList 로 HashMap 을 감쌀 필요 까지는 없고, 
+		//HashMap 타입으로 리턴도 가능-  확인:  52Line ArrayList 주석처리 후 return UserMap )
+		ArrayList<HashMap<String, Object>> UserArray = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> UserMap = new LinkedHashMap<String, Object>();
+
+		//HashMap 특성상 put 할 때 순서가 랜으로 출력됨
+		//여기서는 순서는 상관없지만, LinkedHashMap 으로 순서대로 출력되도록 구현(임시)
+		UserMap.put("user_id", requestJsonHashMap.get("user_id"));
+		UserMap.put("user_password", requestJsonHashMap.get("user_password"));
+		UserArray.add(UserMap);
+		
+		//테스트용 
+		System.out.println(UserMap);
+		System.out.println(UserArray);
+	
+		logger.info((String) requestJsonHashMap.get("user_id"));
+		logger.info((String) requestJsonHashMap.get("user_password"));
+		
+		//Vue로 return 하여 콘솔에서 확인 할 수 있도록 설정해놓음(확인용, 임시)
+		return UserArray;
+	}
+	
+	//로그인 시 ID,PW 가져오기(String type 테스트용)
+//	@PostMapping("login1")
+//	public String postInput1(@RequestBody String user_info) throws Exception { 
+//		
+//		
+//		return user_info;
+//		
+//	}
+
 	
 //	private List<UserDTO> UserDTOs;
 //
