@@ -6,12 +6,12 @@
 
 <!-- refid - table -->
 
-	<sql id="userTable">
+<!--	<sql id="userTable">
 		user_email,
 		user_password,
 		user_name,
 		user_tell
-	</sql>
+	</sql>-->
 
 
 
@@ -19,7 +19,10 @@
 									<!-- com.activity.domain.UserDTO = UserDTO Alias설정 (applilcation.properties) -->
 <select id="getUserList" parameterType="UserDTO" resultType="UserDTO">
 	SELECT
-		<include refid="userTable"/>
+		user_email,
+		user_password,
+		user_name,
+		user_tell
 	FROM
 		user
 </select>

@@ -46,7 +46,6 @@ public class UserController {
 	}
 	
 	//로그인 시 ID,PW 가져오기 
-	
 	@PostMapping("/login")
 	public ArrayList<HashMap<String,Object>> postInput(@RequestBody HashMap<String, Object> requestJsonHashMap)throws Exception {
 		
@@ -57,7 +56,7 @@ public class UserController {
 
 		//HashMap 특성상 put 할 때 순서가 랜으로 출력됨
 		//여기서는 순서는 상관없지만, LinkedHashMap 으로 순서대로 출력되도록 구현(임시)
-		UserMap.put("user_id", requestJsonHashMap.get("user_id"));
+		UserMap.put("user_email", requestJsonHashMap.get("user_email"));
 		UserMap.put("user_password", requestJsonHashMap.get("user_password"));
 		UserArray.add(UserMap);
 		
@@ -65,11 +64,42 @@ public class UserController {
 		System.out.println(UserMap);
 		System.out.println(UserArray);
 	
-		logger.info((String) requestJsonHashMap.get("user_id"));
+		logger.info((String) requestJsonHashMap.get("user_email"));
 		logger.info((String) requestJsonHashMap.get("user_password"));
 		
 		//Vue로 return 하여 콘솔에서 확인 할 수 있도록 설정해놓음(확인용, 임시)
 		return UserArray;
+	}
+	
+	//회원가입 정보 insert
+	@PostMapping("/signup")
+	public ArrayList<HashMap<String,Object>> postSignup(@RequestBody HashMap<String, Object> requestJsonHashMap)throws Exception {
+		
+		//response Data (여기서는 ArrayList 로 HashMap 을 감쌀 필요 까지는 없고, 
+		//HashMap 타입으로 리턴도 가능-  확인:  52Line ArrayList 주석처리 후 return UserMap )
+		ArrayList<HashMap<String, Object>> signupArray = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> signupMap = new LinkedHashMap<String, Object>();
+
+		//HashMap 특성상 put 할 때 순서가 랜으로 출력됨
+		//여기서는 순서는 상관없지만, LinkedHashMap 으로 순서대로 출력되도록 구현(임시)
+		signupMap.put("user_email", requestJsonHashMap.get("user_email"));
+		signupMap.put("user_name", requestJsonHashMap.get("user_name"));
+		signupMap.put("user_password", requestJsonHashMap.get("user_password"));
+		signupMap.put("user_tell", requestJsonHashMap.get("user_tell"));
+		
+		signupArray.add(signupMap);
+		
+		//테스트용 
+		System.out.println(signupMap);
+		System.out.println(signupArray);
+	
+		logger.info((String) requestJsonHashMap.get("user_email"));
+		logger.info((String) requestJsonHashMap.get("user_password"));
+		logger.info((String) requestJsonHashMap.get("user_name"));
+		logger.info((String) requestJsonHashMap.get("user_tell"));
+		
+		//Vue로 return 하여 콘솔에서 확인 할 수 있도록 설정해놓음(확인용, 임시)
+		return signupArray;
 	}
 	
 	//로그인 시 ID,PW 가져오기(String type 테스트용)
