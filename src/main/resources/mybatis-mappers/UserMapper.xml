@@ -10,7 +10,7 @@
 		user_email,
 		user_password,
 		user_name,
-		user_tell 
+		user_tell
 	</sql>
 
 
