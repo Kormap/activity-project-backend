@@ -27,6 +27,12 @@ public class UserServiceImpl implements UserService{
 		userDAO.insertUser(userdto);
 		
 	}
+	
+	//ID 중복 체크 
+	@Override
+	public int getCheckEmail(UserDTO userdto) throws Exception {
+		return userDAO.getCheckEmail(userdto);
+	}
 
 	
 	
