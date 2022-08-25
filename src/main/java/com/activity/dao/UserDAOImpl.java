@@ -20,4 +20,15 @@ public class UserDAOImpl implements UserDAO{
 		return sql.selectList(NAMESPACE + ".getUserList");
 	}
 
+	@Override
+	public void insertUser(UserDTO userdto) throws Exception {
+		
+		sql.insert(NAMESPACE + ".insertUser", userdto);
+	
+	}
+
+	
+	
+	
+	
 }

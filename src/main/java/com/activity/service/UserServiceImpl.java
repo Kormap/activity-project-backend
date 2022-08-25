@@ -13,18 +13,21 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserDAO userDAO;
+	
+	//유저 정보 리스
 	@Override
 	public List<UserDTO> getUserList() throws Exception {
 		return userDAO.getUserList();
+		
 	}
 	
-//	@Autowired
-//	private UserMapper userMapper;
+	//회원가입 정보 insert
+	@Override
+	public void insertUser(UserDTO userdto) throws Exception {
+		userDAO.insertUser(userdto);
+		
+	}
 
-//	//유저 정보 리스트 
-//	@Override
-//	public List<UserDTO> getUserList() throws Exception {
-//		return userMapper.getUserList();
-//	}
-
+	
+	
 }

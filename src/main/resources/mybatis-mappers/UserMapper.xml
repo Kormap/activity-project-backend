@@ -6,23 +6,30 @@
 
 <!-- refid - table -->
 
-<!--	<sql id="userTable">
+	<sql id="userTable">
 		user_email,
 		user_password,
 		user_name,
 		user_tell
-	</sql>-->
+	</sql>
+
+			<!-- com.activity.domain.UserDTO = UserDTO Alias설정 (applilcation.properties) -->
+			
+<!-- 삽입 쿼리  -->
+<insert id="insertUser" parameterType="UserDTO">
+	INSERT INTO user(<include refid="userTable"></include>)
+		VALUES(#{user_email}, #{user_password}, #{user_name}, #{user_tell})
+	
+</insert>
 
 
 
-<!-- 조회쿼리 -->
-									<!-- com.activity.domain.UserDTO = UserDTO Alias설정 (applilcation.properties) -->
+
+<!-- 조회 쿼리  -->
+
 <select id="getUserList" parameterType="UserDTO" resultType="UserDTO">
 	SELECT
-		user_email,
-		user_password,
-		user_name,
-		user_tell
+		<include refid="userTable"></include>
 	FROM
 		user
 </select>

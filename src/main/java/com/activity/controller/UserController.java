@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,7 +56,7 @@ public class UserController {
 		HashMap<String, Object> UserMap = new LinkedHashMap<String, Object>();
 
 		//HashMap 특성상 put 할 때 순서가 랜으로 출력됨
-		//여기서는 순서는 상관없지만, LinkedHashMap 으로 순서대로 출력되도록 구현(임시)
+		//순서는 상관없지만, LinkedHashMap 으로 순서대로 출력되도록 확(임시)
 		UserMap.put("user_email", requestJsonHashMap.get("user_email"));
 		UserMap.put("user_password", requestJsonHashMap.get("user_password"));
 		UserArray.add(UserMap);
@@ -73,9 +74,30 @@ public class UserController {
 	
 	//회원가입 정보 insert
 	@PostMapping("/signup")
-	public ArrayList<HashMap<String,Object>> postSignup(@RequestBody HashMap<String, Object> requestJsonHashMap)throws Exception {
+	public UserDTO postSignup(@RequestBody HashMap<String, Object> requestJsonHashMap, UserDTO userdto)throws Exception {
 		
-		//response Data (여기서는 ArrayList 로 HashMap 을 감쌀 필요 까지는 없고, 
+		
+		
+		//Vue 에서 받은 데이터 userDTO 로 넘기기 
+		userdto.setUser_email(requestJsonHashMap.get("user_email").toString());
+		userdto.setUser_name(requestJsonHashMap.get("user_name").toString());
+		userdto.setUser_password(requestJsonHashMap.get("user_password").toString());
+		userdto.setUser_tell(requestJsonHashMap.get("user_tell").toString());
+		System.out.println(userdto);
+		userService.insertUser(userdto);
+		
+		//Vue로 return 하여 콘솔에서 확인 할 수 있도록 설정해놓음(확인용, 임시)
+		return userdto;
+		
+		//====================   HashMap 으로 초반에 공부용도로 코딩 ,백업 후 삭제(임시) 
+		//====================   Json 타입 데이터(Vue) -> HashMap -> ArrayList 
+		//회원가입 정보 insert
+		
+		/*
+	@PostMapping("/signup")
+	public ArrayList<HashMap<String,Object>> postInput(@RequestBody HashMap<String, Object> requestJsonHashMap)throws Exception {
+		
+		response Data (여기서는 ArrayList 로 HashMap 을 감쌀 필요 까지는 없고, 
 		//HashMap 타입으로 리턴도 가능-  확인:  52Line ArrayList 주석처리 후 return UserMap )
 		ArrayList<HashMap<String, Object>> signupArray = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> signupMap = new LinkedHashMap<String, Object>();
@@ -86,20 +108,21 @@ public class UserController {
 		signupMap.put("user_name", requestJsonHashMap.get("user_name"));
 		signupMap.put("user_password", requestJsonHashMap.get("user_password"));
 		signupMap.put("user_tell", requestJsonHashMap.get("user_tell"));
-		
+		//HashMap ArrayList에 넣기
 		signupArray.add(signupMap);
 		
 		//테스트용 
 		System.out.println(signupMap);
 		System.out.println(signupArray);
-	
 		logger.info((String) requestJsonHashMap.get("user_email"));
 		logger.info((String) requestJsonHashMap.get("user_password"));
 		logger.info((String) requestJsonHashMap.get("user_name"));
 		logger.info((String) requestJsonHashMap.get("user_tell"));
-		
 		//Vue로 return 하여 콘솔에서 확인 할 수 있도록 설정해놓음(확인용, 임시)
 		return signupArray;
+	} 
+	*/
+		
 	}
 	
 	//로그인 시 ID,PW 가져오기(String type 테스트용)
