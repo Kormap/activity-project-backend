@@ -12,5 +12,8 @@ public interface UserDAO {
 	//회원가입 정보 insert
 	public void insertUser(UserDTO userdto) throws Exception;
 	
+	//ID 중복 체크 
+	public int getCheckEmail(UserDTO userdto) throws Exception;
+	
 	
 }

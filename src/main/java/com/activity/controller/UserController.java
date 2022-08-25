@@ -72,6 +72,20 @@ public class UserController {
 		return UserArray;
 	}
 	
+	//회원가입 시 , ID 중복 체크
+	@PostMapping("/checkemail")
+	public int getCheckID(@RequestBody HashMap<String, Object> requestJsonHashMap,UserDTO userdto) throws Exception{
+		
+	   logger.info("===아이디 중복 체크 진입===");
+	   userdto.setUser_email(requestJsonHashMap.get("user_email").toString());
+	   String test = userdto.getUser_email();
+	   logger.info(test);
+	   
+		int checkID = userService.getCheckEmail(userdto);
+		logger.info("checkID :{}", checkID);
+		return checkID;
+	}
+	
 	//회원가입 정보 insert
 	@PostMapping("/signup")
 	public UserDTO postSignup(@RequestBody HashMap<String, Object> requestJsonHashMap, UserDTO userdto)throws Exception {

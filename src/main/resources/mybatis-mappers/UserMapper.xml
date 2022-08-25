@@ -15,23 +15,34 @@
 
 			<!-- com.activity.domain.UserDTO = UserDTO Alias설정 (applilcation.properties) -->
 			
-<!-- 삽입 쿼리  -->
+<!-- ====삽입 쿼리====  -->
+
+<!-- 회원가입 정보 삽입 -->
 <insert id="insertUser" parameterType="UserDTO">
 	INSERT INTO user(<include refid="userTable"></include>)
 		VALUES(#{user_email}, #{user_password}, #{user_name}, #{user_tell})
-	
 </insert>
 
 
 
 
-<!-- 조회 쿼리  -->
 
+<!-- ====조회 쿼리====  -->
+
+<!-- 유저 정보 리스트 -->
 <select id="getUserList" parameterType="UserDTO" resultType="UserDTO">
 	SELECT
 		<include refid="userTable"></include>
 	FROM
 		user
+</select>
+
+<!-- 중복 ID 체크 -->
+<select id="getCheckEmail" resultType="int">
+	SELECT COUNT(*)
+	FROM USER
+	WHERE 
+		user_email = #{user_email}
 </select>
 
 
