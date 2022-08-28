@@ -37,7 +37,7 @@
 		user
 </select>
 
-<!-- 중복 ID 체크 -->
+<!-- 회원가입 중복 ID 체크 -->
 <select id="getCheckEmail" resultType="int">
 	SELECT COUNT(*)
 	FROM USER
@@ -45,6 +45,16 @@
 		user_email = #{user_email}
 </select>
 
-
+<!-- 로그인 체크  --> 
+<select id="getLoginCheck" resultType="int">
+select
+	count(*)
+from 
+	USER
+where 
+	user_email = #{user_email}
+and 
+	user_password = #{user_password}
+</select>
 
 </mapper>

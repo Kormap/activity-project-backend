@@ -14,6 +14,9 @@ public interface UserService {
 	//ID 중복 체크 
 	public int getCheckEmail(UserDTO userdto) throws Exception;
 	
+	//로그인 체크 
+	public int getLoginCheck(UserDTO userdto) throws Exception;
+	
 }
  
 

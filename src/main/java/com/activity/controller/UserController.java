@@ -46,8 +46,27 @@ public class UserController {
 		return getUserList;
 	}
 	
-	//로그인 시 ID,PW 가져오기 
+	
+	//로그인 정보 체크 및 허용 (세션관리)
 	@PostMapping("/login")
+	public int getLoginCheck(@RequestBody HashMap<String, Object> requestJsonHashMap,UserDTO userdto) throws Exception { 
+		
+	   userdto.setUser_email(requestJsonHashMap.get("user_email").toString());
+	   userdto.setUser_password(requestJsonHashMap.get("user_password").toString());
+	   
+	   String test = userdto.getUser_email();
+	   String test2 = userdto.getUser_password();
+	   logger.info(test);
+	   logger.info(test2);
+		int checkLogin = userService.getLoginCheck(userdto);
+		
+		logger.info("로그인체크= "+checkLogin);
+		return checkLogin;
+	}
+	
+	
+	//로그인 시 ID,PW 가져와서 콘솔에 확인 (Test 용)
+	@PostMapping("/logintest")
 	public ArrayList<HashMap<String,Object>> postInput(@RequestBody HashMap<String, Object> requestJsonHashMap)throws Exception {
 		
 		//response Data (여기서는 ArrayList 로 HashMap 을 감쌀 필요 까지는 없고, 

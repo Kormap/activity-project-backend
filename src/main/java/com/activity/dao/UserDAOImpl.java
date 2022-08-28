@@ -36,7 +36,11 @@ public class UserDAOImpl implements UserDAO{
 		return sql.selectOne(NAMESPACE + ".getCheckEmail",userdto);
 	}
 
-	
+	//로그인 체크 
+	public int getLoginCheck(UserDTO userdto) throws Exception {
+		
+		return sql.selectOne(NAMESPACE + ".getLoginCheck", userdto);
+	}
 	
 	
 	
