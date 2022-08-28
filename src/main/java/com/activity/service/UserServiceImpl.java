@@ -34,6 +34,10 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getCheckEmail(userdto);
 	}
 
+	//로그인 체크 
+	public int getLoginCheck(UserDTO userdto) throws Exception {
+		return userDAO.getLoginCheck(userdto);
+	}
 	
 	
 }
