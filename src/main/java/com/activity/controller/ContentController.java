@@ -7,10 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activity.domain.ContentDTO;
+import com.activity.domain.ImageDTO;
 import com.activity.service.ContentService;
 
 @Controller
@@ -24,7 +26,7 @@ public class ContentController {
 	private static final Logger logger = LoggerFactory.getLogger(ContentController.class);
 
 	//컨텐츠 한 건 조회
-	@GetMapping("info")
+	@GetMapping("/info")
 	public ContentDTO getContentInfo() throws Exception { 
 		
 		ContentDTO getContentInfo = contentService.getContentInfo();
@@ -40,6 +42,25 @@ public class ContentController {
 		System.out.println(getContentList);
 		return getContentList;
 	}
+	
+	@GetMapping("/titleimage")
+	public String gettitleImage() throws Exception {
+		
+		String gettitleImage =  contentService.getTitleImage().getImage_path();
+		logger.info("gettitleImage= "+gettitleImage);
+		return gettitleImage;
+	}
+	
+	
+	@GetMapping("/image")
+	//컨텐츠 이미지 조회 (컨텐츠 - 이미지 테이블 조인) 
+	public List<ImageDTO> getContentImage() throws Exception { 
+		
+		List<ImageDTO> getContentImage = contentService.getContentImage();
+		logger.info(getContentImage.toString());
+		return getContentImage;
+	}
+
 	
 
 }

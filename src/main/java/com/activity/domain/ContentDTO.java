@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class ContentDTO {
 
+	//Content 테이블 
 	private int content_no;
 	private String content_name;
 	private String content_info;
@@ -14,6 +15,9 @@ public class ContentDTO {
 	private int content_capacity;
 	private String content_yn;
 	private String admin_email;
+
+	
+	//Content_Option 테이블 넣을지.. DTO 를 만들지..
 	
 	
 	//생성자 

@@ -31,6 +31,14 @@
 		CONTENT
 </select>
 
+<!-- 컨텐츠 리스트 조회 (메인페이지에 사용) -->
+<select id="getContenno" parameterType="ContentDTO" resultType="ContentDTO">
+	SELECT
+		<include refid="contentTable"></include>
+	FROM 
+		CONTENT
+</select>
+
 <!-- 컨텐츠 한건 조회(컨텐츠 번호 10000001로 테스트 조회)  -->
 <select id="getContentInfo" parameterType="ContentDTO" resultType="ContentDTO">
 	SELECT 
@@ -40,5 +48,68 @@
 	WHERE
 		content_no = 10000001;
 </select>
+
+<!-- 컨텐츠-타이틀이미지 조회  -->
+ <select id="getTitleImage" parameterType="ImageDTO" resultType="ImageDTO">
+select 
+	image_no, image_path, content_no, image_type
+from 
+	image_table
+where 
+	content_no = 10000001
+and 
+	image_type = 'title';
+</select> 
+
+<!-- 컨텐츠-이미지 조회  -->
+ <select id="getContentImage" parameterType="ImageDTO" resultType="ImageDTO">
+select 
+	image_no, image_path, content_no, image_type
+from 
+	image_table
+where 
+	content_no = 10000001
+and 
+	image_type = 'info';
+</select> 
+
+
+<!--  <resultMap type="ContentDTO" id="ContentDTO">	
+	<result column="content_no" property="content_no"/>	
+	<result column="content_name" property="content_name"/>	
+	<result column="content_info" property="content_info"/>	
+	<result column="content_price" property="content_price"/>	
+	<result column="content_capacity" property="content_capacity"/>	
+	<result column="content_yn" property="content_yn"/>	
+	<result column="admin_email" property="admin_email"/>	
+	<collection property="ImageDTO" resultMap="ImageDTO"></collection>
+</resultMap>
+
+<resultMap type="ImageDTO" id="ImageDTO">	
+	<result column="image_no" property="image_no"/>	
+	<result column="image_path" property="image_path"/>	
+	<result column="content_no" property="content_no"/>	
+	<result column="image_type" property="image_type"/>	
+</resultMap>
+
+<select id="getContentImage" parameterType="ContentDTO" resultType="ContentDTO">
+select 
+	  A.content_no
+	, A.content_name
+	, A.content_info
+	, A.content_price
+	, A.content_capacity
+	, A.content_yn 
+	, A.admin_email
+	,B.image_path 
+from 
+	content A join image_table B 
+on 
+	A.content_no  = B.content_no 
+where 
+	A.content_no  = 10000001 ;
+
+</select>  -->
+
 
 </mapper>

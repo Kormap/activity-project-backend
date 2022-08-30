@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.activity.dao.ContentDAO;
 import com.activity.domain.ContentDTO;
+import com.activity.domain.ImageDTO;
 
 @Service
 public class ContentServiceImpl implements ContentService {
@@ -28,4 +29,17 @@ public class ContentServiceImpl implements ContentService {
 		return contentdao.getContentInfo();
 	}
 
+	//컨텐츠 타이틀 이미지 조회 
+	public ImageDTO getTitleImage() throws Exception { 
+	
+		return contentdao.getTitleImage();
+	}
+	
+	//컨텐츠 이미지 조회 (컨텐츠 - 이미지 테이블 조인) 
+	public List<ImageDTO> getContentImage() throws Exception { 
+		
+		return contentdao.getContentImage();
+	}
+
+	
 }
