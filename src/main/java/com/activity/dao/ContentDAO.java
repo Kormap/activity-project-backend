@@ -3,6 +3,7 @@ package com.activity.dao;
 import java.util.List;
 
 import com.activity.domain.ContentDTO;
+import com.activity.domain.ImageDTO;
 
 public interface ContentDAO {
 	
@@ -11,5 +12,11 @@ public interface ContentDAO {
 	
 	//컨텐츠 한행 조회
 	public ContentDTO getContentInfo() throws Exception;
+	
+	//컨텐츠 타이틀 이미지 조회 
+	public ImageDTO getTitleImage() throws Exception;
+	
+	//컨텐츠 이미지 조회 (컨텐츠 - 이미지 테이블 조인) 
+	public List<ImageDTO> getContentImage() throws Exception;
 
 }
