@@ -2,6 +2,8 @@ package com.activity.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activity.domain.ContentDTO;
+import com.activity.domain.ContentOptionBO;
+import com.activity.domain.ContentOptionDTO;
 import com.activity.domain.ImageDTO;
 import com.activity.service.ContentService;
 
@@ -59,6 +63,20 @@ public class ContentController {
 		List<ImageDTO> getContentImage = contentService.getContentImage();
 		logger.info(getContentImage.toString());
 		return getContentImage;
+	}
+
+	
+	//컨텐츠 옵션 조회
+	@GetMapping("/option")
+	public List<ContentOptionBO> getContentOption() throws Exception { 
+		
+		List<ContentOptionBO> getContentOption = contentService.getContentOption();
+		
+		
+//		String content_no = getContentOption().
+//		logger.info("content_no = "+content_no);
+		System.out.println(getContentOption);
+		return getContentOption;
 	}
 
 	

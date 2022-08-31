@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.activity.dao.ContentDAO;
 import com.activity.domain.ContentDTO;
+import com.activity.domain.ContentOptionBO;
+import com.activity.domain.ContentOptionDTO;
 import com.activity.domain.ImageDTO;
 
 @Service
@@ -40,6 +42,13 @@ public class ContentServiceImpl implements ContentService {
 		
 		return contentdao.getContentImage();
 	}
+	
+	//컨텐츠 옵션 조회
+	public List<ContentOptionBO> getContentOption() throws Exception {  
+		
+		return contentdao.getContentOption();
+	}
+
 
 	
 }

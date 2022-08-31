@@ -49,7 +49,7 @@
 		content_no = 10000001;
 </select>
 
-<!-- 컨텐츠-타이틀이미지 조회  -->
+<!-- 상세페이지 컨텐츠-타이틀이미지 조회  -->
  <select id="getTitleImage" parameterType="ImageDTO" resultType="ImageDTO">
 select 
 	image_no, image_path, content_no, image_type
@@ -61,7 +61,7 @@ and
 	image_type = 'title';
 </select> 
 
-<!-- 컨텐츠-이미지 조회  -->
+<!-- 상세페이지 컨텐츠-이미지 조회  -->
  <select id="getContentImage" parameterType="ImageDTO" resultType="ImageDTO">
 select 
 	image_no, image_path, content_no, image_type
@@ -73,6 +73,42 @@ and
 	image_type = 'info';
 </select> 
 
+<!-- 상세페이지 컨텐츠 옵션 조회 (resultMap 사용 - BO 방식 ) -->
+<select id="getContentOption" resultType="ContentOptionBO">
+select 
+	A.content_no, A.option_no , B.option_name  
+from 
+	content_option A inner join option_table B
+where 
+	A.option_no =B.option_no
+and 
+	A.content_no = 10000001;
+</select>
+
+
+
+<!-- 상세페이지 컨텐츠 옵션 조회 (resultMap 사용 - BO 만들지 않고 조인해서 사용하는 방법) -->
+<!-- <resultMap type="ContentOptionDTO" id="ContentOptionDTO">	
+	<result column="content_no" property="content_no"/>	
+	<result column="option_no" property="option_no"/>	
+	<collection property="OptionDTO" resultMap="OptionDTO"></collection>
+</resultMap>
+<resultMap type="OptionDTO" id="OptionDTO">	
+	<result column="option_no" property="option_no"/>	
+	<result column="option_name" property="option_name"/>	
+</resultMap>
+
+<select id="getContentOption" resultMap="ContentOptionDTO">
+select 
+	A.content_no, A.option_no , B.option_name  
+from 
+	content_option A inner join option_table B
+where 
+	A.option_no =B.option_no
+and 
+	A.content_no = 10000001;
+</select>
+ -->
 
 <!--  <resultMap type="ContentDTO" id="ContentDTO">	
 	<result column="content_no" property="content_no"/>	

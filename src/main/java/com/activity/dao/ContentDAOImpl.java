@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.activity.domain.ContentDTO;
+import com.activity.domain.ContentOptionBO;
+import com.activity.domain.ContentOptionDTO;
 import com.activity.domain.ImageDTO;
 
 @Repository
@@ -40,6 +42,12 @@ public class ContentDAOImpl implements ContentDAO {
 	public List<ImageDTO> getContentImage() throws Exception {
 		
 		return sql.selectList(NAMESPACE + ".getContentImage");
+	}
+	
+	//컨텐츠 옵션 조회
+	public List<ContentOptionBO> getContentOption() throws Exception {
+		
+		return sql.selectList(NAMESPACE + ".getContentOption");
 	}
 
 }
