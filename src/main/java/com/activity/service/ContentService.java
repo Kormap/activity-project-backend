@@ -3,6 +3,7 @@ package com.activity.service;
 import java.util.List;
 
 import com.activity.domain.ContentDTO;
+import com.activity.domain.ContentListBO;
 import com.activity.domain.ContentOptionBO;
 import com.activity.domain.ContentOptionDTO;
 import com.activity.domain.ImageDTO;
@@ -24,5 +25,6 @@ public interface ContentService {
 	//컨텐츠 옵션 조회
 	public List<ContentOptionBO> getContentOption() throws Exception;
 
-	
+	//컨텐츠 타이틀 이미지 리스트 
+	public List<ContentListBO> getContentListBO() throws Exception;
 }

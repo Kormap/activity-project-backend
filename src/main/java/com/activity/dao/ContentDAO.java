@@ -3,6 +3,7 @@ package com.activity.dao;
 import java.util.List;
 
 import com.activity.domain.ContentDTO;
+import com.activity.domain.ContentListBO;
 import com.activity.domain.ContentOptionBO;
 import com.activity.domain.ContentOptionDTO;
 import com.activity.domain.ImageDTO;
@@ -23,5 +24,7 @@ public interface ContentDAO {
 	
 	//컨텐츠 옵션 조회
 	public List<ContentOptionBO> getContentOption() throws Exception;
-
+	
+	//메인페이지 - 컨텐츠테이블 , 타이틀이미지 리스트 조회
+	public List<ContentListBO> getContentListBO() throws Exception;
 }

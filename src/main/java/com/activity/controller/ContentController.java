@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activity.domain.ContentDTO;
+import com.activity.domain.ContentListBO;
 import com.activity.domain.ContentOptionBO;
 import com.activity.domain.ContentOptionDTO;
 import com.activity.domain.ImageDTO;
@@ -36,6 +37,9 @@ public class ContentController {
 		ContentDTO getContentInfo = contentService.getContentInfo();
 		return getContentInfo;
 	}
+	
+	
+	//========================================================================
 	
 	@GetMapping("/list")
 	//컨텐츠 리스트 조회(테스트용,임시)
@@ -79,6 +83,18 @@ public class ContentController {
 		return getContentOption;
 	}
 
+	// ======================================================================================
+	
+	//메인페이지 (바디컴포넌트 등) 
+	//필요 데이터 : 컨텐츠리스트, 컨텐츠 타이틀이미지, 컨텐츠 카테고리
+	@GetMapping("/mainlist")
+	public List<ContentListBO> getContentListBO() throws Exception {
+		
+		
+		List<ContentListBO> getContentListBO = contentService.getContentListBO();
+		
+		return getContentListBO;
+	}
 	
 
 }
