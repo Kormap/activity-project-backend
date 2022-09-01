@@ -27,27 +27,27 @@ public class ContentServiceImpl implements ContentService {
 
 	//컨텐츠 한행 조회
 	@Override
-	public ContentDTO getContentInfo() throws Exception {
+	public ContentDTO getContentInfo(int content_no) throws Exception {
 			
-		return contentdao.getContentInfo();
+		return contentdao.getContentInfo(content_no);
 	}
 
 	//컨텐츠 타이틀 이미지 조회 
-	public ImageDTO getTitleImage() throws Exception { 
-	
-		return contentdao.getTitleImage();
+	public ImageDTO getTitleImage(int content_no) throws Exception { 
+				
+		return contentdao.getTitleImage(content_no);
 	}
 	
 	//컨텐츠 이미지 조회 (컨텐츠 - 이미지 테이블 조인) 
-	public List<ImageDTO> getContentImage() throws Exception { 
-		
-		return contentdao.getContentImage();
+	public List<ImageDTO> getContentImage(int content_no) throws Exception { 
+//		System.out.println("Service content_no= "+content_no);
+		return contentdao.getContentImage(content_no);
 	}
 	
 	//컨텐츠 옵션 조회
-	public List<ContentOptionBO> getContentOption() throws Exception {  
+	public List<ContentOptionBO> getContentOption(int content_no) throws Exception {  
 		
-		return contentdao.getContentOption();
+		return contentdao.getContentOption(content_no);
 	}
 
 	//컨텐츠 타이틀 이미지 리스트 
