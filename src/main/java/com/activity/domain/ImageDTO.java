@@ -8,7 +8,7 @@ import lombok.Setter;
 public class ImageDTO {
 	
 	private int image_no;
-	private String image_path; //데이터베이스 - blob 바이너리 타입 
+	private String image_path; //데이터베이스 - blob 바이너리 타입 -> String 타입으로 
 	private int content_no;
 	private String image_type;
 	
