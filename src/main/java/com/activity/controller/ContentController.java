@@ -1,5 +1,8 @@
 package com.activity.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,10 +35,12 @@ public class ContentController {
 	private static final Logger logger = LoggerFactory.getLogger(ContentController.class);
 
 	//컨텐츠 한 건 조회
-	@GetMapping("/info")
-	public ContentDTO getContentInfo() throws Exception { 
+	@PostMapping("/info")
+	public ContentDTO getContentInfo(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception { 
 		
-		ContentDTO getContentInfo = contentService.getContentInfo();
+		String queryno = (String) requestJsonHashMap.get("Query_content_no");
+		int content_no = Integer.parseInt(queryno);
+		ContentDTO getContentInfo = contentService.getContentInfo(content_no);
 		return getContentInfo;
 	}
 	
@@ -51,30 +57,38 @@ public class ContentController {
 		return getContentList;
 	}
 	
-	@GetMapping("/titleimage")
-	public String gettitleImage() throws Exception {
+	@PostMapping("/titleimage")
+	public String getTitleImage(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception {
 		
-		String gettitleImage =  contentService.getTitleImage().getImage_path();
+		String queryno = (String) requestJsonHashMap.get("Query_content_no");
+		int content_no = Integer.parseInt(queryno);
+		String gettitleImage =  contentService.getTitleImage(content_no).getImage_path();
 		logger.info("gettitleImage= "+gettitleImage);
 		return gettitleImage;
 	}
 	
 	
-	@GetMapping("/image")
+	@PostMapping("/image")
 	//컨텐츠 이미지 조회 (컨텐츠 - 이미지 테이블 조인) 
-	public List<ImageDTO> getContentImage() throws Exception { 
+	public List<ImageDTO> getContentImage(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception { 
 		
-		List<ImageDTO> getContentImage = contentService.getContentImage();
+		String queryno = (String) requestJsonHashMap.get("Query_content_no");
+		int content_no = Integer.parseInt(queryno);
+//		System.out.println("content_no= " +content_no);
+		List<ImageDTO> getContentImage = contentService.getContentImage(content_no);
 		logger.info(getContentImage.toString());
 		return getContentImage;
 	}
 
 	
 	//컨텐츠 옵션 조회
-	@GetMapping("/option")
-	public List<ContentOptionBO> getContentOption() throws Exception { 
+	@PostMapping("/option")
+	public List<ContentOptionBO> getContentOption(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception { 
 		
-		List<ContentOptionBO> getContentOption = contentService.getContentOption();
+		String queryno = (String) requestJsonHashMap.get("Query_content_no");
+		int content_no = Integer.parseInt(queryno);
+		System.out.println("OptionAPI content_no= " +content_no);
+		List<ContentOptionBO> getContentOption = contentService.getContentOption(content_no);
 		
 		
 //		String content_no = getContentOption().
@@ -96,5 +110,18 @@ public class ContentController {
 		return getContentListBO;
 	}
 	
-
+	//메인페이지 -> 상세페이지로 넘어갈때 Vue 에서 Content_no , Query 받기 
+	@PostMapping("/queryno")
+	public void postQueryno(@RequestBody HashMap<String, Object> requestJsonHashMap )throws Exception {
+		//Object 타입을 스트링 타입으로 => 스트링타입을 Integer.parseInt 로 형변환 
+		String queryno = (String) requestJsonHashMap.get("Query_content_no");
+		int content_no = Integer.parseInt(queryno);
+//		System.out.println("content_no= " +content_no);
+//		contentdto.setContent_no(content_no);
+//		imagedto.setContent_no(content_no);
+		
+//		contentService.getContentImage();
+//		logger.info("getContent_no={}",contentdto.getContent_no());
+	}
+	
 }

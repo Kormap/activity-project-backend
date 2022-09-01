@@ -40,41 +40,41 @@
 </select>
 
 <!-- 컨텐츠 한건 조회(컨텐츠 번호 10000001로 테스트 조회)  -->
-<select id="getContentInfo" parameterType="ContentDTO" resultType="ContentDTO">
+<select id="getContentInfo" parameterType="int" resultType="ContentDTO">
 	SELECT 
 		<include refid="contentTable"></include>
 	FROM
 		CONTENT
 	WHERE
-		content_no = 10000001;
+		content_no = #{content_no}
 </select>
 
 <!-- 상세페이지 컨텐츠-타이틀이미지 조회  -->
- <select id="getTitleImage"  resultType="ImageDTO">
+ <select id="getTitleImage" parameterType="int" resultType="ImageDTO">
 select 
 	image_no, image_path, content_no, image_type
 from 
 	image_table
 where 
-	content_no = 10000001
+	content_no = #{content_no}
 and 
 	image_type = 'title';
 </select> 
 
 <!-- 상세페이지 컨텐츠-이미지 조회  -->
- <select id="getContentImage" resultType="ImageDTO">
+ <select id="getContentImage" parameterType="int" resultType="ImageDTO">
 select 
 	image_no, image_path, content_no, image_type
 from 
 	image_table
 where 
-	content_no = 10000001
+	content_no = #{content_no}
 and 
 	image_type = 'info';
 </select> 
 
 <!-- 상세페이지 컨텐츠 옵션 조회 (resultMap 사용 - BO 방식 ) -->
-<select id="getContentOption" resultType="ContentOptionBO">
+<select id="getContentOption" parameterType="int" resultType="ContentOptionBO">
 select 
 	A.content_no, A.option_no , B.option_name  
 from 
@@ -82,7 +82,7 @@ from
 where 
 	A.option_no =B.option_no
 and 
-	A.content_no = 10000001;
+	A.content_no = #{content_no};
 </select>
 
 

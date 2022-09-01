@@ -14,16 +14,16 @@ public interface ContentDAO {
 	public List<ContentDTO> getContentList() throws Exception;
 	
 	//컨텐츠 한행 조회
-	public ContentDTO getContentInfo() throws Exception;
+	public ContentDTO getContentInfo(int content_no) throws Exception;
 	
 	//컨텐츠 타이틀 이미지 조회 
-	public ImageDTO getTitleImage() throws Exception;
+	public ImageDTO getTitleImage(int content_no) throws Exception;
 	
 	//컨텐츠 이미지 조회 (컨텐츠 - 이미지 테이블 조인) 
-	public List<ImageDTO> getContentImage() throws Exception;
+	public List<ImageDTO> getContentImage(int content_no) throws Exception;
 	
 	//컨텐츠 옵션 조회
-	public List<ContentOptionBO> getContentOption() throws Exception;
+	public List<ContentOptionBO> getContentOption(int content_no) throws Exception;
 	
 	//메인페이지 - 컨텐츠테이블 , 타이틀이미지 리스트 조회
 	public List<ContentListBO> getContentListBO() throws Exception;
