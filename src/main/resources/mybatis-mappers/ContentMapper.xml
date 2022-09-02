@@ -74,15 +74,13 @@ and
 </select> 
 
 <!-- 상세페이지 컨텐츠 옵션 조회 (resultMap 사용 - BO 방식 ) -->
-<select id="getContentOption" parameterType="int" resultType="ContentOptionBO">
+<select id="getContentOption" parameterType="int" resultType="OptionDTO">
 select 
-	A.content_no, A.option_no , B.option_name  
+	option_no, option_name, content_no
 from 
-	content_option A inner join option_table B
-where 
-	A.option_no =B.option_no
-and 
-	A.content_no = #{content_no};
+	option_table
+where
+	content_no  = #{content_no}
 </select>
 
 
@@ -91,7 +89,7 @@ and
 select 
 	A.content_no
 	, A.content_name
-	, A.content_info
+	, A.content_info 
 	, A.content_price
 	, A.content_capacity
 	, A.content_yn
@@ -102,7 +100,9 @@ from
 where 
 	A.content_no = B.content_no
 and 
-	B.image_type = 'title' ;
+	B.image_type = 'title' 
+order by 
+	content_no ;
 </select>
 
 <!-- 상세페이지 컨텐츠 옵션 조회 (resultMap 사용 - BO 만들지 않고 조인해서 사용하는 방법) -->
