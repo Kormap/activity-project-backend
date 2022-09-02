@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.activity.domain.ContentDTO;
 import com.activity.domain.ContentListBO;
-import com.activity.domain.ContentOptionBO;
-import com.activity.domain.ContentOptionDTO;
 import com.activity.domain.ImageDTO;
+import com.activity.domain.OptionDTO;
 
 @Repository
 public class ContentDAOImpl implements ContentDAO {
@@ -46,7 +45,7 @@ public class ContentDAOImpl implements ContentDAO {
 	}
 	
 	//컨텐츠 옵션 조회
-	public List<ContentOptionBO> getContentOption(int content_no) throws Exception {
+	public List<OptionDTO> getContentOption(int content_no) throws Exception {
 		
 		return sql.selectList(NAMESPACE + ".getContentOption",content_no);
 	}

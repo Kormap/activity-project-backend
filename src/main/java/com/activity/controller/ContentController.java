@@ -19,9 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.activity.domain.ContentDTO;
 import com.activity.domain.ContentListBO;
-import com.activity.domain.ContentOptionBO;
-import com.activity.domain.ContentOptionDTO;
 import com.activity.domain.ImageDTO;
+import com.activity.domain.OptionDTO;
 import com.activity.service.ContentService;
 
 @Controller
@@ -83,12 +82,12 @@ public class ContentController {
 	
 	//컨텐츠 옵션 조회
 	@PostMapping("/option")
-	public List<ContentOptionBO> getContentOption(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception { 
+	public List<OptionDTO> getContentOption(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception { 
 		
 		String queryno = (String) requestJsonHashMap.get("Query_content_no");
 		int content_no = Integer.parseInt(queryno);
 		System.out.println("OptionAPI content_no= " +content_no);
-		List<ContentOptionBO> getContentOption = contentService.getContentOption(content_no);
+		List<OptionDTO> getContentOption = contentService.getContentOption(content_no);
 		
 		
 //		String content_no = getContentOption().
@@ -110,7 +109,7 @@ public class ContentController {
 		return getContentListBO;
 	}
 	
-	//메인페이지 -> 상세페이지로 넘어갈때 Vue 에서 Content_no , Query 받기 
+	//메인페이지 -> 상세페이지로 넘어갈때 Vue 에서 Content_no , Query 받기 (테스트용) 
 	@PostMapping("/queryno")
 	public void postQueryno(@RequestBody HashMap<String, Object> requestJsonHashMap )throws Exception {
 		//Object 타입을 스트링 타입으로 => 스트링타입을 Integer.parseInt 로 형변환 

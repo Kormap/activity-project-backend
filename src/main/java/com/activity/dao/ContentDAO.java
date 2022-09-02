@@ -4,9 +4,8 @@ import java.util.List;
 
 import com.activity.domain.ContentDTO;
 import com.activity.domain.ContentListBO;
-import com.activity.domain.ContentOptionBO;
-import com.activity.domain.ContentOptionDTO;
 import com.activity.domain.ImageDTO;
+import com.activity.domain.OptionDTO;
 
 public interface ContentDAO {
 	
@@ -23,7 +22,7 @@ public interface ContentDAO {
 	public List<ImageDTO> getContentImage(int content_no) throws Exception;
 	
 	//컨텐츠 옵션 조회
-	public List<ContentOptionBO> getContentOption(int content_no) throws Exception;
+	public List<OptionDTO> getContentOption(int content_no) throws Exception;
 	
 	//메인페이지 - 컨텐츠테이블 , 타이틀이미지 리스트 조회
 	public List<ContentListBO> getContentListBO() throws Exception;
