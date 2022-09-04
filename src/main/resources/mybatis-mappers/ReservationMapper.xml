@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Mybatis-mapper -->
+
+<mapper namespace="com.activity.mybatis-mappers.ReservationMapper">
+
+	<sql id="reservationTable">
+	r_no 
+	,r_time 
+	,r_peopleCount 
+	,r_price 
+	,r_status_yn
+	,user_email 
+	,content_no 
+	</sql>
+
+
+
+	
+<!-- ====삽입 쿼리====  -->
+
+
+
+
+
+<!-- ====조회 쿼리====  -->
+<!-- 테스트용 예약리스트조회  -->
+<select id="getReservationInfoList" resultType="ReservationInfoDTO">
+	SELECT
+		<include refid="reservationTable"></include>
+	FROM
+		RESERVATIONINFO
+</select>
+
+
+
+
+
+
+</mapper>
