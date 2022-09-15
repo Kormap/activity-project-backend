@@ -4,166 +4,154 @@
 
 <mapper namespace="com.activity.mybatis-mappers.ContentMapper">
 
-	<sql id="contentTable">
-		content_no,
-		content_name,
-		content_info,
-		content_price,
-		content_capacity,
-		content_yn,
-		admin_email		
-	</sql>
-	
-	
-<!-- ====삽입 쿼리====  -->
-
-
-
-
-
-<!-- ====조회 쿼리====  -->
-
-<!-- 컨텐츠 리스트 조회 (테스트용,임시) -->
-<select id="getContentList" parameterType="ContentDTO" resultType="ContentDTO">
-	SELECT
-		<include refid="contentTable"></include>
-	FROM 
-		CONTENT
-</select>
-
-<!-- 컨텐츠 리스트 조회 (메인페이지에 사용) -->
-<select id="getContenno" parameterType="ContentDTO" resultType="ContentDTO">
-	SELECT
-		<include refid="contentTable"></include>
-	FROM 
-		CONTENT
-</select>
-
-<!-- 컨텐츠 한건 조회(컨텐츠 번호 10000001로 테스트 조회)  -->
-<select id="getContentInfo" parameterType="int" resultType="ContentDTO">
-	SELECT 
-		<include refid="contentTable"></include>
-	FROM
-		CONTENT
-	WHERE
-		content_no = #{content_no}
-</select>
-
-<!-- 상세페이지 컨텐츠-타이틀이미지 조회  -->
- <select id="getTitleImage" parameterType="int" resultType="ImageDTO">
-select 
-	image_no, image_path, content_no, image_type
-from 
-	image_table
-where 
-	content_no = #{content_no}
-and 
-	image_type = 'title';
-</select> 
-
-<!-- 상세페이지 컨텐츠-이미지 조회  -->
- <select id="getContentImage" parameterType="int" resultType="ImageDTO">
-select 
-	image_no, image_path, content_no, image_type
-from 
-	image_table
-where 
-	content_no = #{content_no}
-and 
-	image_type = 'info';
-</select> 
-
-<!-- 상세페이지 컨텐츠 옵션 조회 (resultMap 사용 - BO 방식 ) -->
-<select id="getContentOption" parameterType="int" resultType="OptionDTO">
-select 
-	option_no, option_name, content_no
-from 
-	option_table
-where
-	content_no  = #{content_no}
-</select>
-
-
-<!-- 메인페이지 - 컨텐츠테이블 , 타이틀이미지 리스트 조회 -->
-<select id="getContentListBO" resultType="ContentListBO">
-select 
-	A.content_no
-	, A.content_name
-	, A.content_info 
-	, A.content_price
-	, A.content_capacity
-	, A.content_yn
-	, A.admin_email
-	, B.image_path
-from 
-	content A inner join image_table B
-where 
-	A.content_no = B.content_no
-and 
-	B.image_type = 'title' 
-order by 
-	content_no ;
-</select>
-
-<!-- 상세페이지 컨텐츠 옵션 조회 (resultMap 사용 - BO 만들지 않고 조인해서 사용하는 방법) -->
-<!-- <resultMap type="ContentOptionDTO" id="ContentOptionDTO">	
-	<result column="content_no" property="content_no"/>	
-	<result column="option_no" property="option_no"/>	
-	<collection property="OptionDTO" resultMap="OptionDTO"></collection>
-</resultMap>
-<resultMap type="OptionDTO" id="OptionDTO">	
-	<result column="option_no" property="option_no"/>	
-	<result column="option_name" property="option_name"/>	
-</resultMap>
-
-<select id="getContentOption" resultMap="ContentOptionDTO">
-select 
-	A.content_no, A.option_no , B.option_name  
-from 
-	content_option A inner join option_table B
-where 
-	A.option_no =B.option_no
-and 
-	A.content_no = 10000001;
-</select>
- -->
-
-<!--  <resultMap type="ContentDTO" id="ContentDTO">	
-	<result column="content_no" property="content_no"/>	
-	<result column="content_name" property="content_name"/>	
-	<result column="content_info" property="content_info"/>	
-	<result column="content_price" property="content_price"/>	
-	<result column="content_capacity" property="content_capacity"/>	
-	<result column="content_yn" property="content_yn"/>	
-	<result column="admin_email" property="admin_email"/>	
-	<collection property="ImageDTO" resultMap="ImageDTO"></collection>
-</resultMap>
-
-<resultMap type="ImageDTO" id="ImageDTO">	
-	<result column="image_no" property="image_no"/>	
-	<result column="image_path" property="image_path"/>	
-	<result column="content_no" property="content_no"/>	
-	<result column="image_type" property="image_type"/>	
-</resultMap>
-
-<select id="getContentImage" parameterType="ContentDTO" resultType="ContentDTO">
-select 
-	  A.content_no
-	, A.content_name
-	, A.content_info
-	, A.content_price
-	, A.content_capacity
-	, A.content_yn 
-	, A.admin_email
-	,B.image_path 
-from 
-	content A join image_table B 
-on 
-	A.content_no  = B.content_no 
-where 
-	A.content_no  = 10000001 ;
-
-</select>  -->
-
-
+    <sql id="contentTable">
+        CONTENT_NO,
+        CONTENT_NAME,
+        CONTENT_INFO,
+        CONTENT_PRICE,
+        CONTENT_CAPACITY,
+        CONTENT_YN,
+        USR_ID        
+    </sql>
+    
+    
+    <!-- ====삽입 쿼리====  -->
+    
+    
+    
+    
+    
+    <!-- ====조회 쿼리====  -->
+    
+    <!-- 컨텐츠 리스트 조회 (테스트용,임시) -->
+    <select id="getContentList" parameterType="ContentDTO" resultType="ContentDTO">
+        SELECT /* COM.ACTIVITY.MYBATIS-MAPPERS.CONTENTMAPPER.GETCONTENTLIST(컨텐츠 리스트 조회) */
+            <include refid="contentTable"></include>
+          FROM 
+            CONTENT
+    </select>
+    
+    <!-- 컨텐츠 리스트 조회 (메인페이지에 사용) -->
+    <select id="getContenno" parameterType="ContentDTO" resultType="ContentDTO">
+        SELECT /* COM.ACTIVITY.MYBATIS-MAPPERS.CONTENTMAPPER.GETCONTENNO(컨텐츠 리스트 조회) */
+            <include refid="contentTable"></include>
+          FROM CONTENT
+    </select>
+    
+    <!-- 컨텐츠 한건 조회  -->
+    <select id="getContentInfo" parameterType="int" resultType="ContentCategoryBO">
+        SELECT A.CONTENT_NO
+             , A.CONTENT_NAME
+             , A.CONTENT_INFO
+             , A.CONTENT_PRICE
+             , A.CONTENT_CAPACITY
+             , A.CONTENT_YN
+             , A.USR_ID   
+             , B.CATEGORY_NAME 
+             , NULL  /* IMAGE_PATH NULL */
+          FROM CONTENT A INNER JOIN CATEGORY B
+         WHERE A.CONTENT_NO = #{content_no}
+           AND A.CATEGORY_NO = B.CATEGORY_NO
+    </select>
+    
+    <!-- 상세페이지 컨텐츠-타이틀이미지 조회  -->
+     <select id="getTitleImage" parameterType="int" resultType="ImageDTO">
+        SELECT 
+            IMAGE_NO, IMAGE_PATH, CONTENT_NO, IMAGE_TYPE
+          FROM 
+            IMAGE_TABLE
+         WHERE CONTENT_NO = #{content_no}
+           AND IMAGE_TYPE = 'TITLE'
+    </select> 
+    
+    <!-- 상세페이지 컨텐츠-이미지 조회  -->
+    <select id="getContentImage" parameterType="int" resultType="ImageDTO">
+        SELECT /* COM.ACTIVITY.MYBATIS-MAPPERS.CONTENTMAPPER.GETCONTENTIMAGE(상세페이지 컨텐츠-이미지 조회) */ 
+               IMAGE_NO
+             , IMAGE_PATH
+             , CONTENT_NO
+             , IMAGE_TYPE
+          FROM IMAGE_TABLE /* 액티비티 이미지 정보 */
+         WHERE CONTENT_NO = #{content_no}
+           AND IMAGE_TYPE = 'INFO'
+    </select> 
+    
+    <!-- 상세페이지 컨텐츠 옵션 조회 (resultMap 사용 - BO 방식 ) -->
+    <select id="getContentOption" parameterType="int" resultType="OptionDTO">
+        SELECT 
+              OPTION_NO
+             , OPTION_NAME
+             , CONTENT_NO
+        FROM 
+            OPTION_TABLE
+        WHERE
+            CONTENT_NO  = #{content_no}
+    </select>
+    
+    
+    <!-- 메인페이지 - 컨텐츠테이블 , 타이틀이미지 리스트 조회 -->
+    <select id="getContentListBO" resultType="ContentListBO">
+        SELECT A.CONTENT_NO
+             , A.CONTENT_NAME
+             , A.CONTENT_INFO 
+             , A.CONTENT_PRICE
+             , A.CONTENT_CAPACITY
+             , A.CONTENT_YN
+             , A.USR_ID
+             , B.IMAGE_PATH
+          FROM CONTENT A INNER JOIN IMAGE_TABLE B
+         WHERE A.CONTENT_NO = B.CONTENT_NO
+           AND B.IMAGE_TYPE = 'TITLE' 
+           AND A.CONTENT_YN = 'Y'
+         ORDER BY CONTENT_NO DESC
+    </select>
+    
+    <!-- 컨텐츠 검색 결과 조회 -->
+    <select id="searchContent" parameterType="String" resultType="ContentListBO">
+    SELECT A.CONTENT_NO
+         , A.CONTENT_NAME
+         , A.CONTENT_INFO 
+         , A.CONTENT_PRICE
+         , A.CONTENT_CAPACITY
+         , A.CONTENT_YN
+         , A.USR_ID
+         , B.IMAGE_PATH
+     FROM CONTENT A INNER JOIN IMAGE_TABLE B
+    WHERE 
+          A.CONTENT_NO = B.CONTENT_NO
+      AND
+          B.IMAGE_TYPE = 'TITLE'
+      AND
+          A.CONTENT_YN = 'Y'
+      AND
+          A.CONTENT_NAME LIKE CONCAT('%', #{searchText}, '%')
+    ORDER BY 
+          CONTENT_NO ;
+    </select>
+    
+    <!-- 전체 카테고리 조회  -->
+    <select id="getCategory" resultType="CategoryDTO">
+        SELECT CATEGORY_NO
+             , CATEGORY_NAME
+          FROM CATEGORY 
+    </select>
+    
+    <!-- 특정 카테고리 조회  -->
+    <select id="getDetailCategoryList" parameterType="int" resultType="ContentCategoryBO">
+        SELECT A.CONTENT_NO
+             , A.CONTENT_NAME
+             , A.CONTENT_INFO
+             , A.CONTENT_PRICE
+             , A.CONTENT_CAPACITY
+             , A.CONTENT_YN
+             , A.USR_ID   
+             , B.CATEGORY_NAME
+             , C.IMAGE_PATH
+          FROM CONTENT A INNER JOIN CATEGORY B INNER JOIN IMAGE_TABLE C
+         WHERE A.CATEGORY_NO = B.CATEGORY_NO
+           and A.content_no  = C.content_no 
+           and B.category_no = #{category_no}
+           and C.IMAGE_TYPE = 'TITLE'
+    </select>
+    
 </mapper>

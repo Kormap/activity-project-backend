@@ -5,9 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ContentDTO {
+public class ContentCategoryBO {
 
-	//Content 테이블 
 	private int content_no;
 	private String content_name;
 	private String content_info;
@@ -15,14 +14,12 @@ public class ContentDTO {
 	private int content_capacity;
 	private String content_yn;
 	private String usr_id;
+	private String category_name;
+	//Image 테이블 
+	private String image_path;
 
-	
-	//Content_Option 테이블 넣을지.. DTO 를 만들지..
-	
-	
-	//생성자 
-	public ContentDTO(int content_no, String content_name, String content_info, int content_price, int content_capacity,
-			String content_yn, String admin_email) {
+	public ContentCategoryBO(int content_no, String content_name, String content_info, int content_price,
+			int content_capacity, String content_yn, String usr_id, String category_name, String image_path) {
 		super();
 		this.content_no = content_no;
 		this.content_name = content_name;
@@ -30,18 +27,19 @@ public class ContentDTO {
 		this.content_price = content_price;
 		this.content_capacity = content_capacity;
 		this.content_yn = content_yn;
-		this.usr_id = admin_email;
+		this.usr_id = usr_id;
+		this.category_name = category_name;
+		this.image_path = image_path;
 	}
-
 
 	@Override
 	public String toString() {
-		return "ContentDTO [content_no=" + content_no + ", content_name=" + content_name + ", content_info="
+		return "ContentCategoryBO [content_no=" + content_no + ", content_name=" + content_name + ", content_info="
 				+ content_info + ", content_price=" + content_price + ", content_capacity=" + content_capacity
-				+ ", content_yn=" + content_yn + ", usr_id=" + usr_id + "]";
-	}	
+				+ ", content_yn=" + content_yn + ", usr_id=" + usr_id + ", category_name=" + category_name
+				+ ", image_path=" + image_path + "]";
+	}
 	
 	
-	
-	
+
 }

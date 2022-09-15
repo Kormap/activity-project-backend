@@ -3,38 +3,67 @@
 <!-- Mybatis-mapper -->
 
 <mapper namespace="com.activity.mybatis-mappers.ReservationMapper">
+    <!-- ====삽입 쿼리====  -->
+    <!-- 예약정보삽입  -->
+    <insert id="saveReservationInfo" parameterType="ReservationInfoDTO" useGeneratedKeys="true" keyColumn="r_no" >
+        INSERT INTO RESERVATIONINFO 
+        (
+               R_NO
+             , R_TIME 
+             , R_PEOPLECOUNT 
+             , R_PRICE 
+             , R_OPTION
+             , R_STATUS_YN
+             , USER_EMAIL 
+             , CONTENT_NO 
+             , CRTR_ID
+             , CRT_DTTM
+             , UPDR_ID
+             , UPD_DTTM
+        )
+             VALUES
+             (
+             	#{r_no}
+              , #{r_time}
+              , #{r_peoplecount}
+              , #{r_price}
+              , #{r_option}
+              , #{r_status_yn}
+              , #{user_email}
+              , #{content_no}
+              , #{user_email}
+              , NOW()
+              , NULL
+              , NULL
+              )
+    </insert>
+    
+    <!-- 예약정보 취소(업데이트)  -->
+   	<update id="cancelReservation" parameterType="int">
+         UPDATE RESERVATIONINFO 
+            SET R_STATUS_YN = 'N'
+          WHERE R_NO = #{r_no}
+   	</update>
+    
+    
+    
 
-	<sql id="reservationTable">
-	r_no 
-	,r_time 
-	,r_peopleCount 
-	,r_price 
-	,r_status_yn
-	,user_email 
-	,content_no 
-	</sql>
-
-
-
-	
-<!-- ====삽입 쿼리====  -->
-
-
-
-
-
-<!-- ====조회 쿼리====  -->
-<!-- 테스트용 예약리스트조회  -->
-<select id="getReservationInfoList" resultType="ReservationInfoDTO">
-	SELECT
-		<include refid="reservationTable"></include>
-	FROM
-		RESERVATIONINFO
-</select>
-
-
-
-
-
-
+    <!-- ====조회 쿼리====  -->
+    <!-- 예약리스트 조회  -->
+    <select id="getReservationInfoList" parameterType="String" resultType="ReservationHistoryBO" >
+        SELECT R_NO 
+             , A.R_TIME 
+             , A.R_PEOPLECOUNT 
+             , A.R_PRICE 
+             , A.R_OPTION
+             , A.R_STATUS_YN
+             , A.USER_EMAIL 
+             , A.CONTENT_NO
+             , B.CONTENT_NAME
+         FROM RESERVATIONINFO A INNER JOIN CONTENT B
+        WHERE USER_EMAIL = #{user_email}
+          AND A.CONTENT_NO = B.CONTENT_NO
+          AND A.R_STATUS_YN = 'Y'
+        ORDER BY R_NO DESC
+    </select>
 </mapper>

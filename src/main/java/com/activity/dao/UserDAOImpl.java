@@ -20,6 +20,11 @@ public class UserDAOImpl implements UserDAO{
 	public List<UserDTO> getUserList() throws Exception {
 		return sql.selectList(NAMESPACE + ".getUserList");
 	}
+	
+	//로그인 유저 정보 조회 
+	public List<UserDTO> getMyinfo(String user_email) throws Exception {
+		return sql.selectList(NAMESPACE + ".getMyInfo", user_email);
+	}
 
 	//회원가입 정보 insert
 	@Override
@@ -40,6 +45,17 @@ public class UserDAOImpl implements UserDAO{
 	public int getLoginCheck(UserDTO userdto) throws Exception {
 		
 		return sql.selectOne(NAMESPACE + ".getLoginCheck", userdto);
+	}
+
+	@Override
+	public void updateUser(UserDTO userdto) {
+		sql.update(NAMESPACE + ".updateUser", userdto);
+		
+	}
+
+	@Override
+	public void deleteUser(UserDTO userdto) {
+		sql.delete(NAMESPACE + ".deleteUser", userdto);
 	}
 	
 	

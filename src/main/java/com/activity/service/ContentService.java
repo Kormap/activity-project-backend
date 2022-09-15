@@ -2,6 +2,8 @@ package com.activity.service;
 
 import java.util.List;
 
+import com.activity.domain.CategoryDTO;
+import com.activity.domain.ContentCategoryBO;
 import com.activity.domain.ContentDTO;
 import com.activity.domain.ContentListBO;
 import com.activity.domain.ImageDTO;
@@ -13,7 +15,7 @@ public interface ContentService {
 	public List<ContentDTO> getContentList() throws Exception;
 	
 	//컨텐츠 한행 조회
-	public ContentDTO getContentInfo(int content_no) throws Exception;
+	public ContentCategoryBO getContentInfo(int content_no) throws Exception;
 
 	//컨텐츠 이미지 조회 (컨텐츠 - 이미지 테이블 조인) 
 	public List<ImageDTO> getContentImage(int content_no) throws Exception;
@@ -26,4 +28,13 @@ public interface ContentService {
 
 	//컨텐츠 타이틀 이미지 리스트 
 	public List<ContentListBO> getContentListBO() throws Exception;
+
+	//컨텐츠 검색 기능 
+	public List<ContentListBO> searchContent(String searchText) throws Exception;
+	
+	//전체 카테고리 조회
+	public List<CategoryDTO> getCategory() throws Exception;
+
+	//카테고리별 리스트 조회 
+	public List<ContentCategoryBO> getDetailCategoryList(int category_no);
 }

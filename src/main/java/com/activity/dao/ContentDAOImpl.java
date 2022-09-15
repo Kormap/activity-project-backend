@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.activity.domain.CategoryDTO;
+import com.activity.domain.ContentCategoryBO;
 import com.activity.domain.ContentDTO;
 import com.activity.domain.ContentListBO;
 import com.activity.domain.ImageDTO;
@@ -27,7 +29,7 @@ public class ContentDAOImpl implements ContentDAO {
 
 	//컨텐츠 한행 조회
 	@Override
-	public ContentDTO getContentInfo(int content_no) throws Exception {
+	public ContentCategoryBO getContentInfo(int content_no) throws Exception {
 		
 		return sql.selectOne(NAMESPACE + ".getContentInfo",content_no);
 	}
@@ -54,6 +56,24 @@ public class ContentDAOImpl implements ContentDAO {
 	public List<ContentListBO> getContentListBO() throws Exception { 
 		
 		return sql.selectList(NAMESPACE +".getContentListBO");
+	}
+
+	@Override
+	public List<ContentListBO> searchContent(String searchText) {
+		System.out.println("searchText======== "+searchText);
+		return sql.selectList(NAMESPACE + ".searchContent", searchText);
+	}
+
+	//전체 카테고리 조회 
+	@Override
+	public List<CategoryDTO> getCategory() {
+		return sql.selectList(NAMESPACE +".getCategory");
+	}
+
+	//카테고리별 리스트 조회 
+	@Override
+	public List<ContentCategoryBO> getDetailCategoryList(int category_no) {
+		return sql.selectList(NAMESPACE + ".getDetailCategoryList",category_no);
 	}
 
 }

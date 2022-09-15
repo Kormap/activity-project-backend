@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.activity.domain.UserDTO;
 import com.activity.service.UserService;
@@ -46,21 +49,34 @@ public class UserController {
 		return getUserList;
 	}
 	
+	//로그인유저 정보조회 내정보관리페이지 
+	@GetMapping("/myinfo")
+	public List<UserDTO> getMyInfo(HttpSession session) throws Exception {
+		session.getAttribute("user_email");
+		String user_email = (String) session.getAttribute("user_email");
+		List<UserDTO> getMyInfo = userService.getMyinfo(user_email);
+		return getMyInfo;
+	}
+	
 	
 	//로그인 정보 체크 및 허용 (세션관리)
 	@PostMapping("/login")
-	public int getLoginCheck(@RequestBody HashMap<String, Object> requestJsonHashMap,UserDTO userdto) throws Exception { 
+	public int getLoginCheck(@RequestBody HashMap<String, Object> requestJsonHashMap,
+							  HttpSession session,UserDTO userdto) throws Exception { 
 		
-	   userdto.setUser_email(requestJsonHashMap.get("user_email").toString());
-	   userdto.setUser_password(requestJsonHashMap.get("user_password").toString());
+	    userdto.setUser_email(requestJsonHashMap.get("user_email").toString());
+	    userdto.setUser_password(requestJsonHashMap.get("user_password").toString());
+
+	    int checkLogin = userService.getLoginCheck(userdto);
 	   
-	   String test = userdto.getUser_email();
-	   String test2 = userdto.getUser_password();
-	   logger.info(test);
-	   logger.info(test2);
-		int checkLogin = userService.getLoginCheck(userdto);
-		
-		logger.info("로그인체크= "+checkLogin);
+	    if(checkLogin==1) {
+		   //로그인정보 세션 저장 Session
+		   session.setAttribute("user_email", userdto.getUser_email());
+		   //세션 유지시간 지정 ( 3600 초 = 60분 = 1시간 )
+		   session.setMaxInactiveInterval(3600);
+		   Object sessionID = session.getAttribute("user_email");
+		   logger.info("sessionID= "+sessionID);
+	    }
 		return checkLogin;
 	}
 	
@@ -107,7 +123,8 @@ public class UserController {
 	
 	//회원가입 정보 insert
 	@PostMapping("/signup")
-	public UserDTO postSignup(@RequestBody HashMap<String, Object> requestJsonHashMap, UserDTO userdto)throws Exception {
+	public UserDTO postSignup(@RequestBody HashMap<String, Object> requestJsonHashMap, 
+			   				   HttpSession session, UserDTO userdto)throws Exception {
 		
 		
 		
@@ -116,12 +133,51 @@ public class UserController {
 		userdto.setUser_name(requestJsonHashMap.get("user_name").toString());
 		userdto.setUser_password(requestJsonHashMap.get("user_password").toString());
 		userdto.setUser_tell(requestJsonHashMap.get("user_tell").toString());
+		userdto.setCrtr_id((String) session.getAttribute("user_email"));
+		
 		System.out.println(userdto);
 		userService.insertUser(userdto);
 		
 		//Vue로 return 하여 콘솔에서 확인 할 수 있도록 설정해놓음(확인용, 임시)
 		return userdto;
+	}
+	
+	//회원 정보 수정 update 
+	@PostMapping("/update")
+	public void postUpdate(@RequestBody HashMap<String, Object> requestJsonHashMap, UserDTO userdto) throws Exception{
 		
+		userdto.setUser_email(requestJsonHashMap.get("user_email").toString());
+		userdto.setUser_tell(requestJsonHashMap.get("user_tell").toString());
+		userService.updateUser(userdto);
+		
+	}
+	
+	//회원 로그아웃 세션 Session 삭제
+	@GetMapping("/logout")
+	public void getLogout(HttpSession session) { 
+		
+		//로그아웃 시 세션 삭제 
+		session.invalidate();
+		
+	}
+	
+	
+	//회원 정보 삭제 delete
+	@PostMapping("/delete")
+	public void postDelete(@RequestBody HashMap<String, Object> requestJsonHashMap, 
+										HttpSession session, UserDTO userdto) throws Exception { 
+		
+		userdto.setUser_email(requestJsonHashMap.get("user_email").toString());
+		userService.deleteUser(userdto);
+		session.invalidate();
+		
+	}
+	
+	
+	
+	
+	
+	
 		//====================   HashMap 으로 초반에 공부용도로 코딩 ,백업 후 삭제(임시) 
 		//====================   Json 타입 데이터(Vue) -> HashMap -> ArrayList 
 		//회원가입 정보 insert
@@ -156,7 +212,6 @@ public class UserController {
 	} 
 	*/
 		
-	}
 	
 	//로그인 시 ID,PW 가져오기(String type 테스트용)
 //	@PostMapping("login1")
