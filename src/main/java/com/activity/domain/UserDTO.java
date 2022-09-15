@@ -1,4 +1,6 @@
 package com.activity.domain;
+import java.sql.Date;
+
 /*import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;*/
@@ -13,10 +15,23 @@ public class UserDTO {
 	private String user_password;
 	private String user_name;
 	private String user_tell;
-//	private Void getUser_email;
-//	private Void getUser_name;
-//	private Void setUser_id;
-//	private Void setUser_name;
+	private String crtr_id;
+	private Date crt_dttm; // datetime , current_timestamp
+	private String updr_id;
+	private Date upd_dttm;  // datetime , current_timestamp
+	
+	
+	
+	
+//	USER_EMAIL,
+//	USER_PASSWORD,
+//	USER_NAME,
+//	USER_TELL,
+//	CRTR_ID ,
+//	CRT_DTTM ,
+//	UPDR_ID ,
+//	UPD_DTTM 
+
 	
 	//생성자 
 	public UserDTO(String user_email, String user_password, String user_name, String user_tell) {

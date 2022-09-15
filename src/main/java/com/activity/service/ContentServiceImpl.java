@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.activity.dao.ContentDAO;
+import com.activity.domain.CategoryDTO;
+import com.activity.domain.ContentCategoryBO;
 import com.activity.domain.ContentDTO;
 import com.activity.domain.ContentListBO;
 import com.activity.domain.ImageDTO;
@@ -26,7 +28,7 @@ public class ContentServiceImpl implements ContentService {
 
 	//컨텐츠 한행 조회
 	@Override
-	public ContentDTO getContentInfo(int content_no) throws Exception {
+	public ContentCategoryBO getContentInfo(int content_no) throws Exception {
 			
 		return contentdao.getContentInfo(content_no);
 	}
@@ -53,6 +55,24 @@ public class ContentServiceImpl implements ContentService {
 	public List<ContentListBO> getContentListBO() throws Exception { 
 		
 		return contentdao.getContentListBO();
+	}
+
+	@Override
+	public List<ContentListBO> searchContent(String searchText) {
+		
+		return contentdao.searchContent(searchText);
+	}
+
+	//카테고리 조회 
+	@Override
+	public List<CategoryDTO> getCategory() throws Exception {
+
+		return contentdao.getCategory();
+	}
+
+	@Override
+	public List<ContentCategoryBO> getDetailCategoryList(int category_no) {
+		return contentdao.getDetailCategoryList(category_no);
 	}
 	
 }

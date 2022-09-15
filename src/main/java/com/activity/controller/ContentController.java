@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.activity.domain.CategoryDTO;
+import com.activity.domain.ContentCategoryBO;
 import com.activity.domain.ContentDTO;
 import com.activity.domain.ContentListBO;
 import com.activity.domain.ImageDTO;
@@ -33,13 +35,13 @@ public class ContentController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ContentController.class);
 
-	//컨텐츠 한 건 조회
+	//컨텐츠 한 건 조회 (디테일페이지에서 사용) 
 	@PostMapping("/info")
-	public ContentDTO getContentInfo(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception { 
+	public ContentCategoryBO getContentInfo(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception { 
 		
-		String queryno = (String) requestJsonHashMap.get("Query_content_no");
+		String queryno = (String) requestJsonHashMap.get("Query_content_no"); //
 		int content_no = Integer.parseInt(queryno);
-		ContentDTO getContentInfo = contentService.getContentInfo(content_no);
+		ContentCategoryBO getContentInfo = contentService.getContentInfo(content_no);
 		return getContentInfo;
 	}
 	
@@ -73,7 +75,6 @@ public class ContentController {
 		
 		String queryno = (String) requestJsonHashMap.get("Query_content_no");
 		int content_no = Integer.parseInt(queryno);
-//		System.out.println("content_no= " +content_no);
 		List<ImageDTO> getContentImage = contentService.getContentImage(content_no);
 		logger.info(getContentImage.toString());
 		return getContentImage;
@@ -86,13 +87,7 @@ public class ContentController {
 		
 		String queryno = (String) requestJsonHashMap.get("Query_content_no");
 		int content_no = Integer.parseInt(queryno);
-		System.out.println("OptionAPI content_no= " +content_no);
 		List<OptionDTO> getContentOption = contentService.getContentOption(content_no);
-		
-		
-//		String content_no = getContentOption().
-//		logger.info("content_no = "+content_no);
-		System.out.println(getContentOption);
 		return getContentOption;
 	}
 
@@ -111,16 +106,41 @@ public class ContentController {
 	
 	//메인페이지 -> 상세페이지로 넘어갈때 Vue 에서 Content_no , Query 받기 (테스트용) 
 	@PostMapping("/queryno")
-	public void postQueryno(@RequestBody HashMap<String, Object> requestJsonHashMap )throws Exception {
+	public void postQueryno(@RequestBody HashMap<String, Object> requestJsonHashMap)throws Exception {
 		//Object 타입을 스트링 타입으로 => 스트링타입을 Integer.parseInt 로 형변환 
 		String queryno = (String) requestJsonHashMap.get("Query_content_no");
 		int content_no = Integer.parseInt(queryno);
-//		System.out.println("content_no= " +content_no);
-//		contentdto.setContent_no(content_no);
-//		imagedto.setContent_no(content_no);
+
+	}
+	
+	//컨텐츠 검색 API
+	@PostMapping("search")
+	public List<ContentListBO> postsearchText(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception{
+			
+		String searchText = (String) requestJsonHashMap.get("searchText"); 
+		List<ContentListBO> searchContent = contentService.searchContent(searchText);
 		
-//		contentService.getContentImage();
-//		logger.info("getContent_no={}",contentdto.getContent_no());
+		return searchContent;
+	}
+	
+	//전체 카테고리 조회
+	@GetMapping("category")
+	public List<CategoryDTO> getCategory() throws Exception{
+		
+		List<CategoryDTO> getCategory = contentService.getCategory();
+		System.out.println(getCategory);
+		return getCategory; 
+		
+	}
+	
+	//쿼리에 담긴 카테고리별 조회
+	@PostMapping("detailcategory")
+	public List<ContentCategoryBO> getDetailCategoryList(@RequestBody HashMap<String, Object> requestJsonHashMap)throws Exception {
+		
+//		requestJsonHashMap.get("searchText");
+		int category_no =Integer.parseInt(requestJsonHashMap.get("category_no").toString());
+		List<ContentCategoryBO> getDetailCategoryList = contentService.getDetailCategoryList(category_no);
+		return getDetailCategoryList;
 	}
 	
 }
