@@ -53,8 +53,7 @@ public class ContentController {
 	public List<ContentDTO> getContentList() throws Exception { 
 		
 		List<ContentDTO> getContentList = contentService.getContentList();
-		logger.info("컨텐츠리스트 조회");
-		System.out.println(getContentList);
+		logger.info("컨텐츠리스트 조회: "+ getContentList);
 		return getContentList;
 	}
 	
@@ -98,9 +97,7 @@ public class ContentController {
 	@GetMapping("/mainlist")
 	public List<ContentListBO> getContentListBO() throws Exception {
 		
-		
 		List<ContentListBO> getContentListBO = contentService.getContentListBO();
-		
 		return getContentListBO;
 	}
 	
@@ -110,33 +107,26 @@ public class ContentController {
 		//Object 타입을 스트링 타입으로 => 스트링타입을 Integer.parseInt 로 형변환 
 		String queryno = (String) requestJsonHashMap.get("Query_content_no");
 		int content_no = Integer.parseInt(queryno);
-
 	}
 	
 	//컨텐츠 검색 API
 	@PostMapping("search")
 	public List<ContentListBO> postsearchText(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception{
-			
 		String searchText = (String) requestJsonHashMap.get("searchText"); 
 		List<ContentListBO> searchContent = contentService.searchContent(searchText);
-		
 		return searchContent;
 	}
 	
 	//전체 카테고리 조회
 	@GetMapping("category")
 	public List<CategoryDTO> getCategory() throws Exception{
-		
 		List<CategoryDTO> getCategory = contentService.getCategory();
-		System.out.println(getCategory);
 		return getCategory; 
-		
 	}
 	
 	//쿼리에 담긴 카테고리별 조회
 	@PostMapping("detailcategory")
 	public List<ContentCategoryBO> getDetailCategoryList(@RequestBody HashMap<String, Object> requestJsonHashMap)throws Exception {
-		
 //		requestJsonHashMap.get("searchText");
 		int category_no =Integer.parseInt(requestJsonHashMap.get("category_no").toString());
 		List<ContentCategoryBO> getDetailCategoryList = contentService.getDetailCategoryList(category_no);

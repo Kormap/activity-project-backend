@@ -41,7 +41,6 @@ public class ContentServiceImpl implements ContentService {
 	
 	//컨텐츠 이미지 조회 (컨텐츠 - 이미지 테이블 조인) 
 	public List<ImageDTO> getContentImage(int content_no) throws Exception { 
-//		System.out.println("Service content_no= "+content_no);
 		return contentdao.getContentImage(content_no);
 	}
 	

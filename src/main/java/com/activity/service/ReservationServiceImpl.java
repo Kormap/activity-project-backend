@@ -35,6 +35,12 @@ public class ReservationServiceImpl implements ReservationService{
 
 		reservationdao.cancelReservation(r_no);
 	}
+
+	@Override
+	public int selectUserReservation(String user_email) {
+		
+		return reservationdao.selectUserReservation(user_email);
+	}
 	
 	
 }

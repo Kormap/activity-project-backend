@@ -42,7 +42,6 @@ public class ContentDAOImpl implements ContentDAO {
 	
 	//컨텐츠 이미지 조회 (컨텐츠 - 이미지 테이블 조인 테스트용) 
 	public List<ImageDTO> getContentImage(int content_no) throws Exception {
-		System.out.println("ContentDAO content_no= "+content_no);
 		return sql.selectList(NAMESPACE + ".getContentImage", content_no);
 	}
 	
@@ -60,7 +59,6 @@ public class ContentDAOImpl implements ContentDAO {
 
 	@Override
 	public List<ContentListBO> searchContent(String searchText) {
-		System.out.println("searchText======== "+searchText);
 		return sql.selectList(NAMESPACE + ".searchContent", searchText);
 	}
 
