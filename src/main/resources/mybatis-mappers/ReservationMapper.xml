@@ -66,4 +66,14 @@
           AND A.R_STATUS_YN = 'Y'
         ORDER BY R_NO DESC
     </select>
+    
+    <!-- 접속한 사용자 예약리스트 존재 여부 조회 -->
+    <select id="selectUserReservation" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+          FROM RESERVATIONINFO
+         WHERE USER_EMAIL = #{user_email}
+           AND R_STATUS_YN = 'Y'
+    </select>
+    
+    
 </mapper>

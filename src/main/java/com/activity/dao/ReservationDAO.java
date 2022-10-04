@@ -15,6 +15,9 @@ public interface ReservationDAO {
 
 	//예약정보 취소 (업데이트) 
 	public void cancelReservation(int r_no);
+
+	//예약 갯수(회원삭제시)
+	public int selectUserReservation(String user_email);
 	
 }
 

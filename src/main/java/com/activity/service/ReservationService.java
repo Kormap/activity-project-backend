@@ -18,5 +18,8 @@ public interface ReservationService {
 	//예약정보 취소 
 	public void cancelReservation(int r_no);
 	
+	//예약내역 카운트 (회원삭제시)
+	public int selectUserReservation(String user_email);
+	
 	
 }

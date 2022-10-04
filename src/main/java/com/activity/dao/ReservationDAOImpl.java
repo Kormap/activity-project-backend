@@ -19,7 +19,6 @@ public class ReservationDAOImpl implements ReservationDAO {
 	@Override
 	public List<ReservationHistoryBO> getReservationInfoList(String user_email) throws Exception {
 		
-		System.out.println(sql.selectList(NAMESPACE + ".getReservationInfoList"));
 		return sql.selectList(NAMESPACE + ".getReservationInfoList",user_email);
 	}
 	
@@ -33,6 +32,12 @@ public class ReservationDAOImpl implements ReservationDAO {
 	public void cancelReservation(int r_no) {
 
 		sql.update(NAMESPACE + ".cancelReservation", r_no);
+	}
+
+	@Override
+	public int selectUserReservation(String user_email) {
+
+		return sql.selectOne(NAMESPACE + ".selectUserReservation", user_email);
 	}
 	
 	

@@ -32,7 +32,7 @@
           , #{user_password}
           , #{user_name}
           , #{user_tell}
-          , #{crtr_id}
+          , #{user_email}
           , SYSDATE()
           , NULL
           , NULL
@@ -57,15 +57,13 @@
     
     <!-- 유저 정보 리스트 -->
     <select id="getUserList" parameterType="UserDTO" resultType="UserDTO">
-        SELECT
-            <include refid="userTable"></include>
+        SELECT <include refid="userTable"></include>
           FROM USER
     </select>
     
     <!-- 유저 정보 조회 -->
     <select id="getMyInfo" parameterType="String" resultType="UserDTO">
-        SELECT
-            <include refid="userTable"></include>
+        SELECT <include refid="userTable"></include>
           FROM USER
          WHERE USER_EMAIL = #{user_email};
     </select>
@@ -81,10 +79,8 @@
     <select id="getLoginCheck" resultType="int">
         SELECT COUNT(*)
           FROM USER
-         WHERE 
-               USER_EMAIL = #{user_email}
-           AND 
-               USER_PASSWORD = #{user_password}
+         WHERE USER_EMAIL = #{user_email}
+           AND USER_PASSWORD = #{user_password}
     </select>
 
 </mapper>
