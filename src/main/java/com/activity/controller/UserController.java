@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -66,7 +68,7 @@ public class UserController {
 	
 	//로그인 정보 체크 및 허용 (세션관리)
 	@PostMapping("/login")
-	public int getLoginCheck(@RequestBody HashMap<String, Object> requestJsonHashMap,
+	public int getLoginCheck(@RequestBody HashMap<String, Object> requestJsonHashMap,HttpServletResponse response,
 							  HttpSession session,UserDTO userdto) throws Exception { 
 		
 	   //비밀번호 암호화
@@ -86,6 +88,12 @@ public class UserController {
 		   session.setMaxInactiveInterval(3600);
 		   Object sessionID = session.getAttribute("user_email");
 		   logger.info("sessionID= "+sessionID);
+		   
+		   //쿠키 테스트 
+		   Cookie loginCookie = new Cookie("user_email", userdto.getUser_email());
+		   response.addCookie(loginCookie);
+		   
+		   
 	    }
 		return checkLogin;
 	}
