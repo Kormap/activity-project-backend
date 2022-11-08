@@ -25,6 +25,8 @@ import com.activity.domain.ImageDTO;
 import com.activity.domain.OptionDTO;
 import com.activity.service.ContentService;
 
+import com.activity.controller.UserController;
+
 @Controller
 @RestController
 @RequestMapping("/api/content/*")
@@ -95,9 +97,18 @@ public class ContentController {
 	//메인페이지 (바디컴포넌트 등) 
 	//필요 데이터 : 컨텐츠리스트, 컨텐츠 타이틀이미지, 컨텐츠 카테고리
 	@GetMapping("/mainlist")
-	public List<ContentListBO> getContentListBO() throws Exception {
+	public List<ContentListBO> getContentListBO(HttpServletRequest request) throws Exception {
 		
 		List<ContentListBO> getContentListBO = contentService.getContentListBO();
+		
+		//HTTP 공부용 세션 sysout , 로그인 API 에 Set Cookie 설정
+		System.out.println(request.getCookies());
+		if(request.getCookies()==null) {
+			logger.info("쿠키가 존재하지 않습니다");
+		}
+		
+		
+		
 		return getContentListBO;
 	}
 	
