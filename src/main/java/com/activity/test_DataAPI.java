@@ -12,7 +12,7 @@ import lombok.Setter;
 @RestController
 @RequestMapping("/api")
 public class test_DataAPI {
-	//커밋테스트용 주석 1
+	//커밋테스트용 주석 
     @GetMapping("/connect")
     public String helloWorld() {
         return "<h3>Success API connect!</h3>";
