@@ -194,6 +194,40 @@ public class UserController {
 		return reservation_yn;
 		
 	}
+	
+	//카카오 로그인 API 
+	@PostMapping("/api/user/kakaoLogin")
+	public String getkakaoLogin(@RequestBody HashMap<String, Object> kakaoUserInfo, HttpSession session) throws Exception {
+
+		String LOGIN_ACCESS_KEY = "FALSE";
+		String kakao_email = (String) kakaoUserInfo.get("kakao_email");
+		
+	    if(!(kakaoUserInfo==null)) {
+	    	LOGIN_ACCESS_KEY = "TRUE";
+	    }
+	    
+	    //로그인 ACCESS KEY 발급 성공 시 
+	    if(LOGIN_ACCESS_KEY.equals("TRUE")) {
+	    	
+	    	System.out.println("SYSOUT EMAIL = " +kakao_email);
+    	 //로그인정보 세션 저장 Session
+		   session.setAttribute("kakao_email", kakao_email);
+		   //세션 유지시간 지정 ( 3600 초 = 60분 = 1시간 )
+		   session.setMaxInactiveInterval(3600);
+		   Object sessionID = session.getAttribute("kakao_email");
+		   logger.info("sessionID= "+sessionID);
+		   
+		   //쿠키 테스트 
+//		   Cookie loginCookie = new Cookie("kakao_email", kakao_email);
+//		   response.addCookie(loginCookie);
+	    }
+	    
+//	    HashMap<String, Object> kakaoUserInfo = new HashMap<>();
+	    System.out.println("kakaoUserInfo = "+ kakaoUserInfo);
+
+
+		return LOGIN_ACCESS_KEY;
+	}
 
 
 }
