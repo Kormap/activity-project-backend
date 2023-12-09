@@ -100,7 +100,7 @@ public class ContentController {
 	public List<ContentListBO> getContentListBO(HttpServletRequest request) throws Exception {
 		
 		List<ContentListBO> getContentListBO = contentService.getContentListBO();
-		
+		System.out.println(getContentListBO);
 		//HTTP 공부용 세션 sysout , 로그인 API 에 Set Cookie 설정
 		System.out.println(request.getCookies());
 		if(request.getCookies()==null) {
