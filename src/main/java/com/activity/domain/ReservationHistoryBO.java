@@ -8,7 +8,7 @@ import lombok.Setter;
 public class ReservationHistoryBO {
 
 	private int r_no;
-	private String r_time;   //sql.timestamp 클래스 or String 클래스 
+	private String r_time;   //sql.timestamp 클래스 or String 클래스
 	private int r_peoplecount;
 	private int r_price;
 	private String r_option;

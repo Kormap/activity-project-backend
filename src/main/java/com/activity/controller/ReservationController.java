@@ -28,7 +28,7 @@ public class ReservationController {
     
     //예약정보 리스트 조회
     @PostMapping("/infolist")
-    public List<ReservationHistoryBO> getReservationInfoList(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception { 
+    public List<ReservationHistoryBO> getReservationInfoList(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception {
         
         String user_email = (String) requestJsonHashMap.get("user_email");
         List<ReservationHistoryBO> getReservationInfoList = reservationService.getReservationInfoList(user_email);
