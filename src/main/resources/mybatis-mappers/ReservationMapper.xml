@@ -63,7 +63,8 @@
          FROM RESERVATIONINFO A INNER JOIN CONTENT B
         WHERE USER_EMAIL = #{user_email}
           AND A.CONTENT_NO = B.CONTENT_NO
-          AND A.R_STATUS_YN = 'Y'
+          <!-- 취소된 예약 : 취소된예약 리스트로 디스플레이 되도록 반영 -->
+          <!-- AND A.R_STATUS_YN = 'Y' --> 
         ORDER BY R_NO DESC
     </select>
     
