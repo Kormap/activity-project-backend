@@ -13,7 +13,6 @@ configurations {
 		extendsFrom annotationProcessor
 	}
 }
-
 // spring.profile.active Settings
 bootRun {
 	String activeProfile = System.properties['spring.profiles.active']
@@ -53,4 +52,10 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks{
+	processResources {
+		duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
+	}
 }
