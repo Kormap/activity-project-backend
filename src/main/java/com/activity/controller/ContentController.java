@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +39,8 @@ public class ContentController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ContentController.class);
 
+	private static final String prefixApiUrl = "/api/content/";
+
 	//컨텐츠 한 건 조회 (디테일페이지에서 사용) 
 	@PostMapping("/info")
 	public ContentCategoryBO getContentInfo(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception { 
@@ -55,7 +59,7 @@ public class ContentController {
 	public List<ContentDTO> getContentList() throws Exception { 
 		
 		List<ContentDTO> getContentList = contentService.getContentList();
-		logger.info("컨텐츠리스트 조회: "+ getContentList);
+		logger.info("컨텐츠리스트 조회");
 		return getContentList;
 	}
 	
@@ -98,17 +102,13 @@ public class ContentController {
 	//필요 데이터 : 컨텐츠리스트, 컨텐츠 타이틀이미지, 컨텐츠 카테고리
 	@GetMapping("/mainlist")
 	public List<ContentListBO> getContentListBO(HttpServletRequest request) throws Exception {
-		
+		logger.info("메인페이지 조회 : " + prefixApiUrl + "getContentListBO");
+
 		List<ContentListBO> getContentListBO = contentService.getContentListBO();
-		System.out.println(getContentListBO);
-		//HTTP 공부용 세션 sysout , 로그인 API 에 Set Cookie 설정
-		System.out.println(request.getCookies());
 		if(request.getCookies()==null) {
 			logger.info("쿠키가 존재하지 않습니다");
 		}
-		
-		
-		
+
 		return getContentListBO;
 	}
 	
