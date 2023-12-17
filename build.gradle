@@ -41,11 +41,13 @@ dependencies {
 	//직접추가한 dependency
 	implementation 'org.projectlombok:lombok'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
-	// https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1
 	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
-	// https://mvnrepository.com/artifact/commons-codec/commons-codec
+
+	// MyBatis Query Formatter
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16'
 	implementation group: 'commons-codec', name: 'commons-codec', version: '1.15'
-	
+
+
 	
 	//implementation 'org.springframework.boot:spring-boot-starter-security'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
