@@ -17,7 +17,7 @@ ADD ${JAR_FILE} docker-springboot.jar
 
 #EC2(dev) 전용
 ENV SPRING_PROFILES_ACTIVE=dev
-ENV SPRING_DATASOURCE_URL=jdbc:log4jdbc:mysql://localhost:3306/KORMAP?useLocalSessionState=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+ENV SPRING_DATASOURCE_URL=jdbc:log4jdbc:mysql://kormap-database.cpouy2c2sy1w.ap-northeast-2.rds.amazonaws.com:3306/KORMAP?useLocalSessionState=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
 
 # local,dev common
 ENV SPRING_DATASOURCE_USERNAME=kormap
