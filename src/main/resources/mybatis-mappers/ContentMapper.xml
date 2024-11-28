@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Mybatis-mapper -->
+
+<mapper namespace="com.activity.mybatis-mappers.ContentMapper">
+
+    <sql id="contentTable">
+        CONTENT_NO,
+        CONTENT_NAME,
+        CONTENT_INFO,
+        CONTENT_PRICE,
+        CONTENT_CAPACITY,
+        CONTENT_YN,
+        USR_ID,
+    </sql>
+    <!-- ====삽입 쿼리====  -->
+    
+    <!-- ====조회 쿼리====  -->
+    
+    <!-- 컨텐츠 리스트 조회 (테스트용,임시) -->
+    <select id="getContentList" parameterType="ContentDTO" resultType="ContentDTO">
+        SELECT /* COM.ACTIVITY.MYBATIS-MAPPERS.CONTENTMAPPER.GETCONTENTLIST(컨텐츠 리스트 조회) */
+               CONTENT_NO
+             , CONTENT_NAME
+             , CONTENT_INFO
+             , CONTENT_PRICE
+             , CONTENT_CAPACITY
+             , CONTENT_YN
+             , USR_ID
+             , CONTENT_END_DATE
+             , DATE_FORMAT(CONTENT_END_DATE, '%Y-%m-%d') AS CONTENT_END_DATE_FORMAT
+          FROM CONTENT
+         WHERE DATE_FORMAT(CONTENT_END_DATE, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d')
+    </select>
+    
+    <!-- 컨텐츠 리스트 조회 (메인페이지에 사용) -->
+    <select id="getContenno" parameterType="ContentDTO" resultType="ContentDTO">
+        SELECT /* COM.ACTIVITY.MYBATIS-MAPPERS.CONTENTMAPPER.GETCONTENNO(컨텐츠 리스트 조회) */
+            <include refid="contentTable"></include>
+          FROM CONTENT
+    </select>
+    
+    <!-- 컨텐츠 한건 조회  -->
+    <select id="getContentInfo" parameterType="int" resultType="ContentCategoryBO">
+        SELECT A.CONTENT_NO
+             , A.CONTENT_NAME
+             , A.CONTENT_INFO
+             , A.CONTENT_PRICE
+             , A.CONTENT_CAPACITY
+             , A.CONTENT_YN
+             , A.USR_ID   
+             , B.CATEGORY_NAME 
+             , NULL  /* IMAGE_PATH NULL */
+          FROM CONTENT A INNER JOIN CATEGORY B
+         WHERE A.CONTENT_NO = #{content_no}
+           AND A.CATEGORY_NO = B.CATEGORY_NO
+    </select>
+    
+    <!-- 상세페이지 컨텐츠-타이틀이미지 조회  -->
+     <select id="getTitleImage" parameterType="int" resultType="ImageDTO">
+        SELECT IMAGE_NO
+             , IMAGE_PATH
+             , CONTENT_NO
+             , IMAGE_TYPE
+          FROM IMAGE_TABLE
+         WHERE CONTENT_NO = #{content_no}
+           AND IMAGE_TYPE = 'TITLE'
+    </select> 
+    
+    <!-- 상세페이지 컨텐츠-이미지 조회  -->
+    <select id="getContentImage" parameterType="int" resultType="ImageDTO">
+        SELECT /* COM.ACTIVITY.MYBATIS-MAPPERS.CONTENTMAPPER.GETCONTENTIMAGE(상세페이지 컨텐츠-이미지 조회) */ 
+               IMAGE_NO
+             , IMAGE_PATH
+             , CONTENT_NO
+             , IMAGE_TYPE
+          FROM IMAGE_TABLE /* 액티비티 이미지 정보 */
+         WHERE CONTENT_NO = #{content_no}
+           AND IMAGE_TYPE = 'INFO'
+    </select> 
+    
+    <!-- 상세페이지 컨텐츠 옵션 조회 (resultMap 사용 - BO 방식 ) -->
+    <select id="getContentOption" parameterType="int" resultType="OptionDTO">
+        SELECT OPTION_NO
+             , OPTION_NAME
+             , CONTENT_NO
+          FROM  OPTION_TABLE
+         WHERE CONTENT_NO  = #{content_no}
+    </select>
+    
+    
+    <!-- 메인페이지 - 컨텐츠테이블 , 타이틀이미지 리스트 조회 -->
+    <select id="getContentListBO" resultType="ContentListBO">
+        SELECT A.CONTENT_NO
+             , A.CONTENT_NAME
+             , A.CONTENT_INFO 
+             , A.CONTENT_PRICE
+             , A.CONTENT_CAPACITY
+             , A.CONTENT_YN
+             , A.USR_ID
+             , A.CONTENT_END_DATE
+             , B.IMAGE_PATH
+          FROM CONTENT A INNER JOIN IMAGE_TABLE B
+         WHERE A.CONTENT_NO = B.CONTENT_NO
+           AND B.IMAGE_TYPE = 'TITLE' 
+           AND A.CONTENT_YN = 'Y'
+           AND DATE_FORMAT(CONTENT_END_DATE, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d')
+         ORDER BY CONTENT_NO DESC
+    </select>
+    
+    <!-- 컨텐츠 검색 결과 조회 -->
+    <select id="searchContent" parameterType="String" resultType="ContentListBO">
+        SELECT A.CONTENT_NO
+             , A.CONTENT_NAME
+             , A.CONTENT_INFO 
+             , A.CONTENT_PRICE
+             , A.CONTENT_CAPACITY
+             , A.CONTENT_YN
+             , A.USR_ID
+             , A.CONTENT_END_DATE
+             , B.IMAGE_PATH
+         FROM CONTENT A INNER JOIN IMAGE_TABLE B
+        WHERE A.CONTENT_NO = B.CONTENT_NO
+          AND B.IMAGE_TYPE = 'TITLE'
+          AND A.CONTENT_YN = 'Y'
+          AND A.CONTENT_NAME LIKE CONCAT('%', #{searchText}, '%')
+          AND DATE_FORMAT(CONTENT_END_DATE, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d')
+        ORDER BY CONTENT_NO DESC
+    </select>
+    
+    <!-- 전체 카테고리 조회  -->
+    <select id="getCategory" resultType="CategoryDTO">
+        SELECT CATEGORY_NO
+             , CATEGORY_NAME
+          FROM CATEGORY 
+    </select>
+    
+    <!-- 특정 카테고리 조회  -->
+    <select id="getDetailCategoryList" parameterType="int" resultType="ContentCategoryBO">
+        SELECT A.CONTENT_NO
+             , A.CONTENT_NAME
+             , A.CONTENT_INFO
+             , A.CONTENT_PRICE
+             , A.CONTENT_CAPACITY
+             , A.CONTENT_YN
+             , A.USR_ID
+             , A.CONTENT_END_DATE
+             , B.CATEGORY_NAME
+             , C.IMAGE_PATH
+          FROM CONTENT A INNER JOIN CATEGORY B INNER JOIN IMAGE_TABLE C
+         WHERE A.CATEGORY_NO = B.CATEGORY_NO
+           AND A.CONTENT_NO  = C.CONTENT_NO 
+           AND B.CATEGORY_NO = #{category_no}
+           AND C.IMAGE_TYPE = 'TITLE'
+           AND DATE_FORMAT(CONTENT_END_DATE, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d')
+         ORDER BY CONTENT_NO DESC
+    </select>
+    
+</mapper>

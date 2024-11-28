@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Mybatis-mapper -->
+
+<mapper namespace="com.activity.mybatis-mappers.WishlistMapper">
+
+    <sql id="wishlistTable">
+        WISHLIST_NO,
+        CONTENT_NO,
+        USER_EMAIL
+    </sql>
+    
+    
+    <!-- ====삽입 쿼리====  -->
+    <insert id="saveWishlist" parameterType="WishlistDTO">
+        INSERT INTO WISHLIST
+        (
+               WISHLIST_NO
+             , CONTENT_NO
+             , USER_EMAIL
+        )
+               VALUES
+               (
+                      #{wishlist_no}
+                    , #{content_no}
+                    , #{user_email}
+               )
+    </insert>
+    
+    
+    
+    
+    <!-- ====조회 쿼리====  -->
+    <!--  로그인한 사용자의 위시리스트 조회  -->
+    <select id="getWishlist" resultType="WishListBO">
+        SELECT A.CONTENT_NO
+             , A.CONTENT_NAME
+             , A.CONTENT_INFO
+             , A.CONTENT_PRICE 	
+             , A.CONTENT_CAPACITY
+             , A.CONTENT_YN 
+             , A.USR_ID 
+             , B.IMAGE_PATH 
+             , C.WISHLIST_NO 
+             , D.USER_EMAIL 
+          FROM 
+               CONTENT A INNER JOIN IMAGE_TABLE B INNER JOIN WISHLIST C INNER JOIN USER D
+         WHERE 
+               A.CONTENT_NO  = B.CONTENT_NO 
+           AND 
+               A.CONTENT_NO  = C.CONTENT_NO 
+           AND 
+               C.USER_EMAIL = D.USER_EMAIL 
+           AND 
+               B.IMAGE_TYPE = 'TITLE'
+           AND 
+               D.USER_EMAIL = #{user_email}
+         ORDER BY WISHLIST_NO DESC;
+    </select>
+    
+    <!-- 로그인한 사용자 위시리스트 중복여부 조회  -->
+    <select id="checkDuplicateWishlist" parameterType="WishlistDTO" resultType="int">
+		SELECT COUNT(*)
+		  FROM WISHLIST
+		 WHERE USER_EMAIL  = #{user_email}
+		   AND CONTENT_NO = #{content_no}
+    </select>
+    
+    
+    
+    <!-- 삭제 쿼리 -->
+    <delete id="deletewishlist" parameterType="WishlistDTO">
+       DELETE FROM WISHLIST
+        WHERE WISHLIST_NO = #{wishlist_no}
+          AND CONTENT_NO = #{content_no}
+          AND USER_EMAIL = #{user_email} 
+    </delete>
+</mapper>

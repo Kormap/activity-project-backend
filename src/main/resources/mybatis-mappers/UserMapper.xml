@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Mybatis-mapper -->
+
+<mapper namespace="com.activity.mybatis-mappers.UserMapper">
+
+<!-- refid - table -->
+
+    <sql id="userTable">
+        USER_EMAIL,
+        USER_PASSWORD,
+        USER_NAME,
+        USER_TELL,
+        CRTR_ID ,
+        CRT_DTTM ,
+        UPDR_ID ,
+        UPD_DTTM 
+    </sql>
+
+    <!-- com.activity.domain.UserDTO = UserDTO Alias설정 (applilcation.properties) -->
+            
+    <!-- ====삽입 쿼리====  -->
+
+    <!-- 회원가입 정보 삽입 -->
+    <insert id="insertUser" parameterType="UserDTO">
+        INSERT INTO USER
+        (
+            <include refid="userTable"></include>
+        )
+        VALUES
+        (    #{user_email}
+          , #{user_password}
+          , #{user_name}
+          , #{user_tell}
+          , #{user_email}
+          , SYSDATE()
+          , NULL
+          , NULL
+        )
+    </insert>
+    
+    <!-- 업데이트(수정) 쿼리  -->
+    <update id="updateUser" parameterType="UserDTO">
+        UPDATE USER
+           SET USER_TELL = #{user_tell}
+             , UPDR_ID = #{user_email}
+             , UPD_DTTM = NOW()
+         WHERE USER_EMAIL = #{user_email}
+    </update>
+
+    <!-- ==== 삭제 쿼리 ==== -->
+    <delete id="deleteUser" parameterType="UserDTO">
+        DELETE FROM USER
+         WHERE USER_EMAIL = #{user_email}
+    </delete>
+    <!-- ====조회 쿼리====  -->
+    
+    <!-- 유저 정보 리스트 -->
+    <select id="getUserList" parameterType="UserDTO" resultType="UserDTO">
+        SELECT <include refid="userTable"></include>
+          FROM USER
+    </select>
+    
+    <!-- 유저 정보 조회 -->
+    <select id="getMyInfo" parameterType="String" resultType="UserDTO">
+        SELECT <include refid="userTable"></include>
+          FROM USER
+         WHERE USER_EMAIL = #{user_email};
+    </select>
+    
+    <!-- 회원가입 중복 ID 체크 -->
+    <select id="getCheckEmail" resultType="int">
+        SELECT COUNT(*)
+          FROM USER
+         WHERE USER_EMAIL = #{user_email}
+    </select>
+    
+    <!-- 로그인 체크  --> 
+    <select id="getLoginCheck" resultType="int">
+        SELECT COUNT(*)
+          FROM USER
+         WHERE USER_EMAIL = #{user_email}
+           AND USER_PASSWORD = #{user_password}
+    </select>
+
+</mapper>
