@@ -13,7 +13,7 @@
 - **클라우드/DevOps:** AWS(EC2, RDS), Docker
 <br><br>
 
-##**소프트웨어 구조**
+**소프트웨어 구조**
 ![image](https://github.com/user-attachments/assets/375f2da9-e3b6-4631-b73a-7db132f16637)
 
 <br><br>
@@ -21,5 +21,5 @@
 ## 🏗️ **프로젝트 ERD**
 ![image](https://github.com/user-attachments/assets/77155d3c-5076-47ec-85a1-6d5d32a472b2)
 
-
+![image](https://github.com/user-attachments/assets/9eec090c-4024-4fbf-b5ac-cd79f4be4a4a)
 ![image](https://github.com/user-attachments/assets/82b5e1b5-f86e-4762-99a8-24d3bf47c582)
