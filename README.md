@@ -1,6 +1,6 @@
 ## Activity-reservation Backend
 
-** Activity-reservation Backend ** 는 다양한 액티비티 컨텐츠를 쉽게 예약하여 즐길 수 있도록 서비스하는것이 목적인 플랫폼입니다. 카테고리별 액티비티 예약 환경을 제공합니다.
+**Activity-reservation Backend** 는 다양한 액티비티 컨텐츠를 쉽게 예약하여 즐길 수 있도록 서비스하는것이 목적인 플랫폼입니다. 카테고리별 액티비티 예약 환경을 제공합니다.
 
 <br><br>
 
